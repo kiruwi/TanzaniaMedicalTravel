@@ -5,9 +5,11 @@ const config = useRuntimeConfig()
 const todos = ref([])
 const errorMessage = ref('')
 const pending = ref(false)
+const supabasePublishableKey =
+  config.public.supabasePublishableKey || config.public.supabaseAnonKey || config.public.supabaseKey
 
-const supabase = config.public.supabaseUrl && (config.public.supabaseKey || config.public.supabaseAnonKey)
-  ? createClient(config.public.supabaseUrl, config.public.supabaseKey || config.public.supabaseAnonKey)
+const supabase = config.public.supabaseUrl && supabasePublishableKey
+  ? createClient(config.public.supabaseUrl, supabasePublishableKey)
   : null
 
 async function getTodos() {
