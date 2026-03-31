@@ -19,6 +19,10 @@
         </button>
         <p v-if="status">{{ status }}</p>
       </form>
+      <div class="auth-page__divider">or</div>
+      <button class="button button--ghost auth-page__oauth" :disabled="pending" type="button" @click="signInGoogle">
+        Sign in with Google
+      </button>
       <NuxtLink to="/auth/forgot-password">Forgot password?</NuxtLink>
       <p>
         No account?
@@ -37,7 +41,7 @@ import { buildHeadLinks, buildSeoMeta } from '~/utils/seo'
 
 const route = useRoute()
 const router = useRouter()
-const { signIn } = useAuth()
+const { signIn, signInWithGoogle } = useAuth()
 
 const email = ref('')
 const password = ref('')
@@ -72,6 +76,18 @@ async function submit() {
 
   router.push('/patient')
 }
+
+async function signInGoogle() {
+  pending.value = true
+  status.value = ''
+
+  const { error } = await signInWithGoogle('/patient')
+
+  if (error) {
+    pending.value = false
+    status.value = error.message || 'Unable to continue with Google.'
+  }
+}
 </script>
 
 <style scoped>
@@ -84,5 +100,14 @@ async function submit() {
   padding: 0.9rem 1rem;
   border: 1px solid var(--color-border);
   border-radius: 0.85rem;
+}
+
+.auth-page__divider {
+  text-align: center;
+  color: var(--color-text-soft);
+}
+
+.auth-page__oauth {
+  width: 100%;
 }
 </style>
