@@ -4,6 +4,9 @@ import { inquirySchema, validateBody } from '~/server/utils/validators'
 
 export default defineEventHandler(async (event) => {
   const input = await validateBody(event, inquirySchema)
+  let emailStatus = {
+    skipped: true
+  }
 
   const inquiry = addInquiry({
     id: `INQ-${Date.now()}`,
@@ -22,13 +25,26 @@ export default defineEventHandler(async (event) => {
     created_at: new Date().toISOString()
   })
 
-  await sendTransactionalEmail({
-    to: input.email,
-    subject: 'We received your inquiry',
-    html: `<p>Your inquiry for ${input.treatment_interest} has been received.</p>`
-  })
+  try {
+    emailStatus = await sendTransactionalEmail({
+      to: input.email,
+      subject: 'We received your inquiry',
+      html: `<p>Your inquiry for ${input.treatment_interest} has been received.</p>`
+    })
+  } catch (error) {
+    console.error('Failed to send inquiry confirmation email', {
+      inquiryId: inquiry.id,
+      error: error instanceof Error ? error.message : error
+    })
+
+    emailStatus = {
+      skipped: false,
+      failed: true
+    }
+  }
 
   return {
-    inquiry
+    inquiry,
+    email: emailStatus
   }
 })

@@ -35,6 +35,7 @@ export default defineNuxtConfig({
     supabaseServiceRoleKey: supabaseSecretKey,
     stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
     resendApiKey: process.env.RESEND_API_KEY || '',
+    resendFrom: process.env.RESEND_FROM || 'care@example-medical-travel.com',
     strapiUrl: process.env.STRAPI_URL || '',
     strapiToken: process.env.STRAPI_TOKEN || '',
     public: {

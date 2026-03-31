@@ -12,7 +12,7 @@ export async function sendTransactionalEmail({ to, subject, html }) {
   const resend = new Resend(config.resendApiKey)
 
   return resend.emails.send({
-    from: process.env.RESEND_FROM || 'care@example-medical-travel.com',
+    from: config.resendFrom || 'care@example-medical-travel.com',
     to,
     subject,
     html
