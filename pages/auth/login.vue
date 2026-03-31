@@ -20,6 +20,10 @@
         <p v-if="status">{{ status }}</p>
       </form>
       <NuxtLink to="/auth/forgot-password">Forgot password?</NuxtLink>
+      <p>
+        No account?
+        <NuxtLink to="/auth/register">Create account</NuxtLink>
+      </p>
     </div>
   </div>
 </template>

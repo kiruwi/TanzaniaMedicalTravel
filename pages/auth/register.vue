@@ -4,21 +4,28 @@
       <span class="eyebrow">Register</span>
       <h2>Create a patient account</h2>
     </div>
-    <form class="stack">
+    <form class="stack" @submit.prevent="submit">
       <label class="auth-page__field">
         <span>Full name</span>
-        <input type="text" />
+        <input v-model="fullName" required type="text" />
       </label>
       <label class="auth-page__field">
         <span>Email</span>
-        <input type="email" />
+        <input v-model="email" required type="email" />
       </label>
       <label class="auth-page__field">
         <span>Password</span>
-        <input type="password" />
+        <input v-model="password" minlength="8" required type="password" />
       </label>
-      <button class="button" type="button">Create account</button>
+      <button class="button" :disabled="pending" type="submit">
+        {{ pending ? 'Creating account...' : 'Create account' }}
+      </button>
+      <p v-if="status">{{ status }}</p>
     </form>
+    <p>
+      Already have an account?
+      <NuxtLink to="/auth/login">Sign in</NuxtLink>
+    </p>
   </div>
 </template>
 
@@ -30,6 +37,13 @@ definePageMeta({
 import { buildHeadLinks, buildSeoMeta } from '~/utils/seo'
 
 const route = useRoute()
+const router = useRouter()
+const { signUp } = useAuth()
+const fullName = ref('')
+const email = ref('')
+const password = ref('')
+const pending = ref(false)
+const status = ref('')
 
 useSeoMeta(buildSeoMeta({
   title: 'Register',
@@ -41,6 +55,67 @@ useSeoMeta(buildSeoMeta({
 useHead({
   link: buildHeadLinks(route.path)
 })
+
+async function submit() {
+  pending.value = true
+  status.value = ''
+
+  const { data, error } = await signUp({
+    email: email.value,
+    password: password.value,
+    options: {
+      data: {
+        full_name: fullName.value,
+        role: 'patient',
+        profile_complete: false
+      }
+    }
+  })
+
+  if (error) {
+    pending.value = false
+    status.value = error.message || 'Unable to create your account.'
+    return
+  }
+
+  const user = data.user
+
+  if (user?.id && user.email) {
+    try {
+      const syncResponse = await $fetch('/api/auth/sync-user', {
+        method: 'POST',
+        body: {
+          id: user.id,
+          email: user.email,
+          role: 'patient',
+          full_name: fullName.value
+        }
+      })
+
+      if (syncResponse?.synced === false) {
+        pending.value = false
+        status.value = syncResponse.reason || 'Account created, but profile sync failed.'
+        return
+      }
+    } catch (syncError) {
+      pending.value = false
+      status.value = syncError?.data?.statusMessage || 'Account created, but profile sync failed.'
+      return
+    }
+  }
+
+  pending.value = false
+
+  if (data.session) {
+    router.push('/patient')
+    return
+  }
+
+  status.value = 'Account created. Check your email to confirm your account, then sign in.'
+  fullName.value = ''
+  email.value = ''
+  password.value = ''
+}
 </script>
 
 <style scoped>

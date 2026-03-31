@@ -25,21 +25,51 @@ export default defineEventHandler(async (event) => {
     role: body.role || 'patient'
   }
 
-  const { data, error } = await supabase
+  const fullName = String(body.full_name || '').trim()
+  const [firstName = '', ...lastNameParts] = fullName.split(/\s+/).filter(Boolean)
+  const lastName = lastNameParts.join(' ')
+
+  const { data: user, error: userError } = await supabase
     .from('users')
     .upsert(payload, { onConflict: 'id' })
     .select()
     .single()
 
-  if (error) {
+  if (userError) {
     throw createError({
       statusCode: 500,
-      statusMessage: error.message
+      statusMessage: userError.message
     })
+  }
+
+  let profile = null
+
+  if (payload.role === 'patient') {
+    const profilePayload = {
+      user_id: body.id,
+      first_name: firstName || null,
+      last_name: lastName || null
+    }
+
+    const { data: syncedProfile, error: profileError } = await supabase
+      .from('patient_profiles')
+      .upsert(profilePayload, { onConflict: 'user_id' })
+      .select()
+      .single()
+
+    if (profileError) {
+      throw createError({
+        statusCode: 500,
+        statusMessage: profileError.message
+      })
+    }
+
+    profile = syncedProfile
   }
 
   return {
     synced: true,
-    user: data
+    user,
+    profile
   }
 })

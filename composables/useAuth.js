@@ -26,6 +26,16 @@ export function useAuth() {
     return response
   }
 
+  async function signUp(credentials) {
+    if (!nuxtApp.$supabase) {
+      return { error: new Error('Supabase client is not configured.') }
+    }
+
+    const response = await nuxtApp.$supabase.auth.signUp(credentials)
+    await getSession()
+    return response
+  }
+
   async function signOut() {
     if (nuxtApp.$supabase) {
       await nuxtApp.$supabase.auth.signOut()
@@ -42,6 +52,7 @@ export function useAuth() {
     userRole,
     getSession,
     signIn,
+    signUp,
     signOut
   }
 }
