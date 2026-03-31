@@ -1,0 +1,11 @@
+node_modules/
+.nuxt/
+.output/
+.codex
+
+.env
+.env.local
+
+.DS_Store
+Thumbs.db
+node_modules

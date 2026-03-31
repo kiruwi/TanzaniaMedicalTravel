@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+  <title id="title">Tanzania Medical Travel logo</title>
+  <desc id="desc">A teal medical cross with a gold path line</desc>
+  <rect width="240" height="240" rx="48" fill="#0f766e"/>
+  <path d="M104 44h32v60h60v32h-60v60h-32v-60H44v-32h60z" fill="#e6fff9"/>
+  <path d="M68 172c20-24 40-36 60-36 19 0 34 6 44 18 10 10 18 18 24 24" fill="none" stroke="#fbbf24" stroke-linecap="round" stroke-width="14"/>
+</svg>
