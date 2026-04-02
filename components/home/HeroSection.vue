@@ -81,6 +81,12 @@
   font-size: 1.8rem;
 }
 
+.hero__metric span {
+  display: block;
+  color: var(--color-text-soft);
+  font-weight: var(--font-weight-copy);
+}
+
 @media (max-width: 900px) {
   .hero__grid {
     grid-template-columns: 1fr;

@@ -59,6 +59,10 @@
   --container-width: 1180px;
   --font-body: "Alexandria", sans-serif;
   --font-heading: "Alexandria", sans-serif;
+  --font-weight-copy: 300;
+  --font-weight-emphasis: 400;
+  --font-size-page-title: clamp(1.94rem, 3.42vw, 3.02rem);
+  --font-size-card-title: clamp(1.34rem, 2vw, 1.82rem);
 }
 
 *,
@@ -76,6 +80,7 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-body);
+  font-weight: var(--font-weight-copy);
   line-height: 1.6;
 }
 
@@ -154,12 +159,12 @@ p {
   margin: 0 0 1rem;
   color: var(--color-paragraph);
   font-size: 0.9rem;
-  font-weight: 300;
+  font-weight: inherit;
 }
 
 b,
 strong {
-  font-weight: 400;
+  font-weight: var(--font-weight-emphasis);
 }
 
 ul {
@@ -233,6 +238,26 @@ ul {
 .section-heading p {
   max-width: 56rem;
   color: var(--color-text-soft);
+}
+
+.section-heading > h1,
+.blog-article > h1,
+.doctor-detail > h1,
+.hospital-detail > h1,
+.destination-detail > h1,
+.treatment-overview > h1 {
+  font-size: var(--font-size-page-title);
+  line-height: 1.12;
+}
+
+.about__card h2,
+.blog-card h2,
+.contact__sidebar h2,
+.destination-card h2,
+.faq-list__item h2,
+.pricing-card h2 {
+  font-size: var(--font-size-card-title);
+  line-height: 1.16;
 }
 
 .status-badge {

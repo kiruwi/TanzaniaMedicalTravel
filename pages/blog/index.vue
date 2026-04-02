@@ -5,7 +5,7 @@
         <span class="eyebrow">Blog</span>
         <h1>Editorial pages for search visibility and patient education.</h1>
       </div>
-      <div class="stack">
+      <div class="blog-list">
         <article v-for="post in blogPosts" :key="post.slug" class="surface-card blog-card">
           <span class="status-badge">{{ formatDate(post.publishedAt) }}</span>
           <h2>{{ post.title }}</h2>
@@ -36,6 +36,12 @@ useHead({
 </script>
 
 <style scoped>
+.blog-list {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .blog-card {
   padding: 1.5rem;
 }
@@ -47,5 +53,11 @@ useHead({
 .blog-card a {
   color: var(--color-primary);
   font-weight: 400;
+}
+
+@media (max-width: 900px) {
+  .blog-list {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
