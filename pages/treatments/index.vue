@@ -1,5 +1,5 @@
 <template>
-  <section class="section">
+  <section class="section treatments-page">
     <div class="container">
       <div class="section-heading">
         <span class="eyebrow">Treatments</span>
@@ -27,3 +27,9 @@ useHead({
   link: buildHeadLinks(route.path)
 })
 </script>
+
+<style scoped>
+.treatments-page {
+  padding-top: 1.25rem;
+}
+</style>

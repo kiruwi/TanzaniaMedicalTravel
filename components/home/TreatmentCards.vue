@@ -188,15 +188,17 @@ function proceduresLabel(specialty = '', name = '') {
   align-items: center;
   gap: 0.45rem;
   margin-top: 1.35rem;
-  color: #fff6a8;
+  color: #facc15;
   font-weight: 400;
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity 0.24s ease, transform 0.24s ease;
+  transition: opacity 0.24s ease, transform 0.24s ease, color 0.24s ease;
 }
 
 .cards__item:hover .cards__link,
 .cards__item:focus-visible .cards__link {
+  color: #facc15;
+  font-weight: 300;
   opacity: 1;
   transform: translateY(0);
 }

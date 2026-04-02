@@ -13,7 +13,6 @@
       </nav>
 
       <div class="site-header__actions">
-        <NuxtLink class="button button--ghost" to="/auth/login">Patient login</NuxtLink>
         <NuxtLink class="button" to="/contact">Get a quote</NuxtLink>
       </div>
 
@@ -35,15 +34,11 @@ const open = ref(false)
 const isScrolled = ref(false)
 
 const navItems = [
-  { label: 'About', to: '/about' },
   { label: 'Treatments', to: '/treatments' },
   { label: 'Hospitals', to: '/hospitals' },
   { label: 'Doctors', to: '/doctors' },
-  { label: 'Destinations', to: '/destinations' },
   { label: 'Pricing', to: '/pricing' },
-  { label: 'Blog', to: '/blog' },
-  { label: 'FAQ', to: '/faq' },
-  { label: 'Contact', to: '/contact' }
+  { label: 'FAQ', to: '/faq' }
 ]
 
 const isHome = computed(() => route.path === '/')
@@ -124,13 +119,24 @@ onBeforeUnmount(() => {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2.25rem;
   color: var(--color-text-soft);
-  font-size: 0.9rem;
+  font-size: 1.00rem;
+  font-weight: 400;
 }
 
 .site-header--overlay .site-header__nav {
   color: #f4fffb;
+}
+
+.site-header__nav a {
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.site-header__nav a:hover,
+.site-header__nav a:focus-visible {
+  color: #facc15;
+  font-weight: 300;
 }
 
 .site-header__actions {
@@ -144,22 +150,13 @@ onBeforeUnmount(() => {
   font-size: 0.9rem;
 }
 
-.site-header--overlay .site-header__actions :deep(.button--ghost) {
-  border-color: rgba(244, 255, 251, 0.44);
-  color: #f4fffb;
-}
-
-.site-header--overlay .site-header__actions :deep(.button--ghost:hover) {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.site-header--overlay .site-header__actions :deep(.button:not(.button--ghost)) {
+.site-header--overlay .site-header__actions :deep(.button) {
   background: rgba(244, 255, 251, 0.14);
   border-color: rgba(244, 255, 251, 0.18);
   color: #f4fffb;
 }
 
-.site-header--overlay .site-header__actions :deep(.button:not(.button--ghost):hover) {
+.site-header--overlay .site-header__actions :deep(.button:hover) {
   background: rgba(244, 255, 251, 0.22);
 }
 
