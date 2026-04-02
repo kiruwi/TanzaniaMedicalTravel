@@ -6,7 +6,7 @@
         <h1>Specialists linked to case coordination and treatment pages.</h1>
       </div>
       <div class="grid-three">
-        <DoctorCard v-for="doctor in items" :key="doctor.slug" :doctor="doctor" />
+        <DoctorCard v-for="doctor in items" :key="doctor.slug" :doctor="doctor" :show-badge="false" />
       </div>
     </div>
   </section>

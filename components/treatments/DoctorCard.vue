@@ -1,6 +1,6 @@
 <template>
   <article class="doctor-card surface-card">
-    <span class="status-badge">{{ doctor.specialty }}</span>
+    <span v-if="showBadge" class="status-badge">{{ doctor.specialty }}</span>
     <h3>{{ doctor.name }}</h3>
     <p>{{ doctor.title }}</p>
     <p class="doctor-card__summary">{{ doctor.summary }}</p>
@@ -13,6 +13,10 @@ defineProps({
   doctor: {
     type: Object,
     required: true
+  },
+  showBadge: {
+    type: Boolean,
+    default: true
   }
 })
 </script>
