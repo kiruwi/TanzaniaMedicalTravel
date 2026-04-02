@@ -1,6 +1,6 @@
 <template>
   <section class="home-testimonials section">
-    <div class="container">
+    <div class="container testimonials-layout">
       <div class="section-heading">
         <span class="eyebrow">Patient feedback</span>
         <h2 class="section-title-swoosh">What patients and families love about the experience.</h2>
@@ -32,6 +32,13 @@ defineProps({
   background: #12393d;
 }
 
+.testimonials-layout {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+}
+
 .section-heading {
   justify-items: center;
   text-align: center;
@@ -45,7 +52,7 @@ defineProps({
 .testimonials {
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
 }
 
 .testimonials__item {
@@ -72,6 +79,15 @@ defineProps({
 }
 
 @media (max-width: 900px) {
+  .testimonials-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading {
+    justify-items: center;
+    text-align: center;
+  }
+
   .testimonials {
     grid-template-columns: 1fr;
   }
