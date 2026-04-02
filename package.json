@@ -18,5 +18,10 @@
     "resend": "^4.6.0",
     "stripe": "^18.0.0",
     "zod": "^3.24.2"
+  },
+  "optionalDependencies": {
+    "@emnapi/core": "^1.9.1",
+    "@emnapi/runtime": "^1.9.1",
+    "@emnapi/wasi-threads": "^1.2.0"
   }
 }
