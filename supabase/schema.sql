@@ -363,10 +363,29 @@ begin
 end;
 $$;
 
+create or replace function public.handle_auth_user_delete()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  delete from public.users
+  where id = old.id;
+
+  return old;
+end;
+$$;
+
 drop trigger if exists on_auth_user_synced on auth.users;
 create trigger on_auth_user_synced
 after insert or update of email, raw_user_meta_data, raw_app_meta_data on auth.users
 for each row execute function public.handle_auth_user_sync();
+
+drop trigger if exists on_auth_user_deleted on auth.users;
+create trigger on_auth_user_deleted
+after delete on auth.users
+for each row execute function public.handle_auth_user_delete();
 
 alter table public.users enable row level security;
 alter table public.patient_profiles enable row level security;
