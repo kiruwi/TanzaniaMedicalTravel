@@ -320,6 +320,40 @@ as $$
   );
 $$;
 
+create or replace function public.handle_auth_user_sync()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  app_role text := coalesce(new.raw_app_meta_data ->> 'role', new.raw_user_meta_data ->> 'role', 'patient');
+  full_name text := trim(coalesce(new.raw_user_meta_data ->> 'full_name', ''));
+  first_name text := nullif(split_part(full_name, ' ', 1), '');
+  last_name text := nullif(trim(substr(full_name, char_length(split_part(full_name, ' ', 1)) + 1)), '');
+begin
+  insert into public.users (id, email, role, created_at, updated_at)
+  values (new.id, new.email, app_role, coalesce(new.created_at, now()), now())
+  on conflict (id) do update
+    set email = excluded.email,
+        role = excluded.role,
+        updated_at = now();
+
+  if app_role = 'patient' then
+    insert into public.patient_profiles (user_id, first_name, last_name, created_at, updated_at)
+    values (new.id, first_name, last_name, coalesce(new.created_at, now()), now())
+    on conflict (user_id) do nothing;
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists on_auth_user_synced on auth.users;
+create trigger on_auth_user_synced
+after insert or update of email, raw_user_meta_data, raw_app_meta_data on auth.users
+for each row execute function public.handle_auth_user_sync();
+
 alter table public.users enable row level security;
 alter table public.patient_profiles enable row level security;
 alter table public.specialties enable row level security;

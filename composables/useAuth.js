@@ -11,22 +11,29 @@ export function useAuth() {
       return { synced: true }
     }
 
-    const response = await $fetch('/api/auth/sync-user', {
-      method: 'POST',
-      body: {
-        id: authUser.id,
-        email: authUser.email,
-        role: authUser.user_metadata?.role || 'patient',
-        full_name: authUser.user_metadata?.full_name || ''
+    try {
+      const response = await $fetch('/api/auth/sync-user', {
+        method: 'POST',
+        body: {
+          id: authUser.id,
+          email: authUser.email,
+          role: authUser.user_metadata?.role || 'patient',
+          full_name: authUser.user_metadata?.full_name || ''
+        }
+      })
+
+      if (response?.synced === false) {
+        return response
       }
-    })
 
-    if (response?.synced === false) {
+      syncedUserId.value = authUser.id
       return response
+    } catch (error) {
+      return {
+        synced: false,
+        reason: error?.data?.statusMessage || error?.message || 'Unable to sync user record.'
+      }
     }
-
-    syncedUserId.value = authUser.id
-    return response
   }
 
   async function getSession() {

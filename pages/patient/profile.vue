@@ -4,19 +4,19 @@
     <div class="grid-two">
       <div>
         <strong>Name</strong>
-        <p>{{ profile.first_name }} {{ profile.last_name }}</p>
+        <p>{{ displayName }}</p>
       </div>
       <div>
         <strong>Phone</strong>
-        <p>{{ profile.phone }}</p>
+        <p>{{ profile.phone || 'Not provided' }}</p>
       </div>
       <div>
         <strong>Country</strong>
-        <p>{{ profile.country_of_residence }}</p>
+        <p>{{ profile.country_of_residence || 'Not provided' }}</p>
       </div>
       <div>
         <strong>Preferred contact</strong>
-        <p>{{ profile.preferred_contact_method }}</p>
+        <p>{{ profile.preferred_contact_method || 'Not provided' }}</p>
       </div>
     </div>
   </section>
@@ -29,6 +29,10 @@ definePageMeta({
 })
 
 const { profile } = usePatient()
+const displayName = computed(() => {
+  const parts = [profile.value?.first_name, profile.value?.last_name].filter(Boolean)
+  return parts.join(' ') || 'Not provided'
+})
 </script>
 
 <style scoped>

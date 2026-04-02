@@ -85,32 +85,6 @@ async function submit() {
     return
   }
 
-  const user = data.user
-
-  if (user?.id && user.email) {
-    try {
-      const syncResponse = await $fetch('/api/auth/sync-user', {
-        method: 'POST',
-        body: {
-          id: user.id,
-          email: user.email,
-          role: 'patient',
-          full_name: fullName.value
-        }
-      })
-
-      if (syncResponse?.synced === false) {
-        pending.value = false
-        status.value = syncResponse.reason || 'Account created, but profile sync failed.'
-        return
-      }
-    } catch (syncError) {
-      pending.value = false
-      status.value = syncError?.data?.statusMessage || 'Account created, but profile sync failed.'
-      return
-    }
-  }
-
   pending.value = false
 
   if (data.session) {
