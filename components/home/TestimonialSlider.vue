@@ -3,7 +3,7 @@
     <div class="container">
       <div class="section-heading">
         <span class="eyebrow">Patient feedback</span>
-        <h2>What patients and families love about the experience.</h2>
+        <h2 class="section-title-swoosh">What patients and families love about the experience.</h2>
       </div>
       <div class="testimonials">
         <article v-for="item in items" :key="item.name" class="surface-card testimonials__item">

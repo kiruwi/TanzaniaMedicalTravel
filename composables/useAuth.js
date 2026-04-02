@@ -66,6 +66,31 @@ export function useAuth() {
     return response
   }
 
+  async function requestPasswordReset(email, next = '/auth/reset-password') {
+    if (!nuxtApp.$supabase) {
+      return { error: new Error('Supabase client is not configured.') }
+    }
+
+    const origin = window.location.origin || config.public.siteUrl
+
+    return nuxtApp.$supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${origin}${next}`
+    })
+  }
+
+  async function updatePassword(password) {
+    if (!nuxtApp.$supabase) {
+      return { error: new Error('Supabase client is not configured.') }
+    }
+
+    const response = await nuxtApp.$supabase.auth.updateUser({
+      password
+    })
+
+    await getSession()
+    return response
+  }
+
   async function signInWithGoogle(next = '/patient') {
     if (!nuxtApp.$supabase) {
       return { error: new Error('Supabase client is not configured.') }
@@ -99,6 +124,8 @@ export function useAuth() {
     getSession,
     signIn,
     signUp,
+    requestPasswordReset,
+    updatePassword,
     signInWithGoogle,
     signOut
   }

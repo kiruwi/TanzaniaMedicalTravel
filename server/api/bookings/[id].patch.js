@@ -1,27 +1,71 @@
-import { addAuditLog, updateBooking } from '~/server/utils/mockStore'
 import { assertRole } from '~/server/utils/permissions'
+import { getSupabaseAdmin, normalizeUuid } from '~/server/utils/supabase'
 
 export default defineEventHandler(async (event) => {
   assertRole(event, ['coordinator', 'admin'])
-
+  const supabase = getSupabaseAdmin()
+  const bookingId = getRouterParam(event, 'id')
+  const actorId = normalizeUuid(event.context.userId)
   const updates = await readBody(event)
-  const booking = updateBooking(getRouterParam(event, 'id'), updates)
 
-  if (!booking) {
+  if (!supabase) {
     throw createError({
-      statusCode: 404,
-      statusMessage: 'Booking not found'
+      statusCode: 500,
+      statusMessage: 'Supabase service credentials are not configured'
     })
   }
 
-  addAuditLog({
-    id: `AUD-${Date.now()}`,
-    actor_id: event.context.userId || 'system',
-    entity_type: 'booking',
-    entity_id: booking.id,
-    action: 'update',
-    created_at: new Date().toISOString()
-  })
+  const allowedFields = ['booking_type', 'provider_name', 'booking_reference', 'start_date', 'end_date', 'status', 'notes']
+  const bookingUpdates = Object.fromEntries(
+    Object.entries(updates || {}).filter(([key, value]) => allowedFields.includes(key) && value !== undefined)
+  )
+
+  if (Object.keys(bookingUpdates).length === 0) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'No valid booking fields were provided'
+    })
+  }
+
+  const { data: booking, error: bookingError } = await supabase
+    .from('bookings')
+    .update(bookingUpdates)
+    .eq('id', bookingId)
+    .select()
+    .single()
+
+  if (bookingError) {
+    if (bookingError.code === 'PGRST116') {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Booking not found'
+      })
+    }
+
+    throw createError({
+      statusCode: 500,
+      statusMessage: bookingError.message
+    })
+  }
+
+  const { error: auditError } = await supabase
+    .from('audit_logs')
+    .insert({
+      actor_id: actorId,
+      entity_type: 'booking',
+      entity_id: booking.id,
+      action: 'update',
+      metadata: {
+        updates: bookingUpdates
+      }
+    })
+
+  if (auditError) {
+    console.error('Failed to write booking update audit log', {
+      bookingId: booking.id,
+      error: auditError.message
+    })
+  }
 
   return {
     booking

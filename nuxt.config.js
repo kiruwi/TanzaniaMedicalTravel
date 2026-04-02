@@ -1,4 +1,5 @@
 import { defineNuxtConfig } from 'nuxt/config'
+import { fileURLToPath } from 'node:url'
 
 const siteUrl = process.env.NUXT_SITE_URL || 'https://example-medical-travel.com'
 const supabaseUrl = process.env.NUXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || ''
@@ -20,6 +21,15 @@ export default defineNuxtConfig({
   },
   devtools: {
     enabled: true
+  },
+  vite: {
+    resolve: {
+      alias: process.env.NODE_ENV === 'development'
+        ? {
+            '#app-manifest': fileURLToPath(new URL('./.nuxt/manifest/meta/dev.json', import.meta.url))
+          }
+        : {}
+    }
   },
   modules: [
     '@nuxtjs/robots',

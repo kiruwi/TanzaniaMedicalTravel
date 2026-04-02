@@ -1,5 +1,5 @@
 <template>
-  <header class="site-header">
+  <header :class="headerClasses" class="site-header">
     <div class="container site-header__inner">
       <NuxtLink class="site-header__brand" to="/">
         <img class="site-header__brand-mark" src="/images/logo-mark.svg" alt="" aria-hidden="true">
@@ -27,9 +27,12 @@
 </template>
 
 <script setup>
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import MobileMenu from '~/components/layout/MobileMenu.vue'
 
+const route = useRoute()
 const open = ref(false)
+const isScrolled = ref(false)
 
 const navItems = [
   { label: 'About', to: '/about' },
@@ -42,6 +45,26 @@ const navItems = [
   { label: 'FAQ', to: '/faq' },
   { label: 'Contact', to: '/contact' }
 ]
+
+const isHome = computed(() => route.path === '/')
+const isOverlay = computed(() => isHome.value && !isScrolled.value)
+const headerClasses = computed(() => ({
+  'site-header--overlay': isOverlay.value,
+  'site-header--scrolled': isScrolled.value
+}))
+
+function syncScrollState() {
+  isScrolled.value = window.scrollY > 24
+}
+
+onMounted(() => {
+  syncScrollState()
+  window.addEventListener('scroll', syncScrollState, { passive: true })
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', syncScrollState)
+})
 </script>
 
 <style scoped>
@@ -52,6 +75,18 @@ const navItems = [
   border-bottom: 1px solid rgba(214, 229, 225, 0.9);
   backdrop-filter: blur(14px);
   background: rgba(247, 251, 250, 0.92);
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
+}
+
+.site-header--overlay {
+  border-bottom-color: transparent;
+  backdrop-filter: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.site-header--scrolled {
+  box-shadow: 0 12px 30px rgba(6, 60, 55, 0.08);
 }
 
 .site-header__inner {
@@ -81,13 +116,21 @@ const navItems = [
   font-weight: 700;
 }
 
+.site-header--overlay .site-header__brand {
+  color: #f4fffb;
+}
+
 .site-header__nav {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   color: var(--color-text-soft);
   font-size: 0.9rem;
+}
+
+.site-header--overlay .site-header__nav {
+  color: #f4fffb;
 }
 
 .site-header__actions {
@@ -101,6 +144,25 @@ const navItems = [
   font-size: 0.9rem;
 }
 
+.site-header--overlay .site-header__actions :deep(.button--ghost) {
+  border-color: rgba(244, 255, 251, 0.44);
+  color: #f4fffb;
+}
+
+.site-header--overlay .site-header__actions :deep(.button--ghost:hover) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.site-header--overlay .site-header__actions :deep(.button:not(.button--ghost)) {
+  background: rgba(244, 255, 251, 0.14);
+  border-color: rgba(244, 255, 251, 0.18);
+  color: #f4fffb;
+}
+
+.site-header--overlay .site-header__actions :deep(.button:not(.button--ghost):hover) {
+  background: rgba(244, 255, 251, 0.22);
+}
+
 .site-header__menu-button {
   display: none;
   padding: 0.7rem 1rem;
@@ -109,6 +171,11 @@ const navItems = [
   background: transparent;
   font-size: 0.9rem;
   font-weight: 300;
+}
+
+.site-header--overlay .site-header__menu-button {
+  border-color: rgba(244, 255, 251, 0.38);
+  color: #f4fffb;
 }
 
 @media (max-width: 1040px) {

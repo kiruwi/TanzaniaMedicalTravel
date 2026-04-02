@@ -3,10 +3,14 @@ import Lenis from 'lenis'
 export default defineNuxtPlugin((nuxtApp) => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
   const revealSelector = [
-    '.section h1',
-    '.section h2',
-    '.section h3',
-    '.section h4'
+    '.hero__copy h1',
+    '.section-heading > h1',
+    '.section-heading > h2',
+    '.blog-article > h1',
+    '.doctor-detail > h1',
+    '.hospital-detail > h1',
+    '.destination-detail > h1',
+    '.treatment-overview > h1'
   ].join(', ')
 
   let lenis = null
