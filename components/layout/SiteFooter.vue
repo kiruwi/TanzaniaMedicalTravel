@@ -43,8 +43,7 @@
 </template>
 
 <script setup>
-const config = useRuntimeConfig()
-const supportEmail = config.public.supportEmail
+const supportEmail = 'info@traveltotanzania.com'
 </script>
 
 <style scoped>
