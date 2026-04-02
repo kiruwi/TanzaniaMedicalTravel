@@ -42,6 +42,7 @@ import { buildHeadLinks, buildSeoMeta } from '~/utils/seo'
 
 const route = useRoute()
 const router = useRouter()
+const config = useRuntimeConfig()
 const { signUp, signInWithGoogle } = useAuth()
 const fullName = ref('')
 const email = ref('')
@@ -63,11 +64,13 @@ useHead({
 async function submit() {
   pending.value = true
   status.value = ''
+  const origin = window.location.origin || config.public.siteUrl
 
   const { data, error } = await signUp({
     email: email.value,
     password: password.value,
     options: {
+      emailRedirectTo: `${origin}/auth/login`,
       data: {
         full_name: fullName.value,
         role: 'patient',
