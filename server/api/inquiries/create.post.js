@@ -1,29 +1,58 @@
-import { addAuditLog, addInquiry } from '~/server/utils/mockStore'
 import { sendTransactionalEmail } from '~/server/utils/email'
+import { getSupabaseAdmin } from '~/server/utils/supabase'
 import { inquirySchema, validateBody } from '~/server/utils/validators'
 
 export default defineEventHandler(async (event) => {
   const input = await validateBody(event, inquirySchema)
+  const supabase = getSupabaseAdmin()
   let emailStatus = {
     skipped: true
   }
 
-  const inquiry = addInquiry({
-    id: `INQ-${Date.now()}`,
+  if (!supabase) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Supabase service credentials are not configured'
+    })
+  }
+
+  const inquiryPayload = {
     ...input,
     source: 'website',
-    status: 'new',
-    created_at: new Date().toISOString()
-  })
+    status: 'new'
+  }
 
-  addAuditLog({
-    id: `AUD-${Date.now()}`,
-    actor_id: 'public',
-    entity_type: 'inquiry',
-    entity_id: inquiry.id,
-    action: 'create',
-    created_at: new Date().toISOString()
-  })
+  const { data: inquiry, error: inquiryError } = await supabase
+    .from('inquiries')
+    .insert(inquiryPayload)
+    .select()
+    .single()
+
+  if (inquiryError) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: inquiryError.message
+    })
+  }
+
+  const { error: auditError } = await supabase
+    .from('audit_logs')
+    .insert({
+      actor_id: null,
+      entity_type: 'inquiry',
+      entity_id: inquiry.id,
+      action: 'create',
+      metadata: {
+        source: 'website'
+      }
+    })
+
+  if (auditError) {
+    console.error('Failed to write inquiry audit log', {
+      inquiryId: inquiry.id,
+      error: auditError.message
+    })
+  }
 
   try {
     emailStatus = await sendTransactionalEmail({
