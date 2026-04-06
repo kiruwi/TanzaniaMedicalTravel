@@ -2,7 +2,7 @@
   <div class="stack auth-page">
     <div>
       <span class="eyebrow">Set new password</span>
-      <h2>Choose a new patient portal password</h2>
+      <h2>Choose a new admin password</h2>
     </div>
     <form class="stack" @submit.prevent="submit">
       <label class="auth-page__field">
@@ -70,7 +70,7 @@ async function submit() {
 
 useSeoMeta(buildSeoMeta({
   title: 'Reset password',
-  description: 'Create a new password for the patient portal.',
+  description: 'Create a new password for the admin portal.',
   path: route.path,
   robots: 'noindex, nofollow'
 }))

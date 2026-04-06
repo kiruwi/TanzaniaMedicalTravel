@@ -1,9 +1,10 @@
 import { assertRole } from '~/server/utils/permissions'
-import { getSupabaseAdmin, normalizeUuid } from '~/server/utils/supabase'
+import { getSupabaseAdmin, getSupabaseUser, normalizeUuid } from '~/server/utils/supabase'
 
 export default defineEventHandler(async (event) => {
   assertRole(event, ['coordinator', 'admin'])
-  const supabase = getSupabaseAdmin()
+  const supabase = getSupabaseUser(event)
+  const adminSupabase = getSupabaseAdmin()
   const bookingId = getRouterParam(event, 'id')
   const actorId = normalizeUuid(event.context.userId)
   const updates = await readBody(event)
@@ -11,7 +12,7 @@ export default defineEventHandler(async (event) => {
   if (!supabase) {
     throw createError({
       statusCode: 500,
-      statusMessage: 'Supabase service credentials are not configured'
+      statusMessage: 'Supabase auth client is not configured'
     })
   }
 
@@ -48,23 +49,25 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const { error: auditError } = await supabase
-    .from('audit_logs')
-    .insert({
-      actor_id: actorId,
-      entity_type: 'booking',
-      entity_id: booking.id,
-      action: 'update',
-      metadata: {
-        updates: bookingUpdates
-      }
-    })
+  if (adminSupabase) {
+    const { error: auditError } = await adminSupabase
+      .from('audit_logs')
+      .insert({
+        actor_id: actorId,
+        entity_type: 'booking',
+        entity_id: booking.id,
+        action: 'update',
+        metadata: {
+          updates: bookingUpdates
+        }
+      })
 
-  if (auditError) {
-    console.error('Failed to write booking update audit log', {
-      bookingId: booking.id,
-      error: auditError.message
-    })
+    if (auditError) {
+      console.error('Failed to write booking update audit log', {
+        bookingId: booking.id,
+        error: auditError.message
+      })
+    }
   }
 
   return {

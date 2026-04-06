@@ -1,6 +1,7 @@
-import { blogPosts, doctors, hospitals, treatments } from '~/utils/mockData'
+import { blogPosts } from '~/utils/mockData'
+import { getWebsiteContent } from '~/server/utils/contentCatalog'
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
   const query = (getQuery(event).q || '').toString().toLowerCase()
 
   if (!query) {
@@ -9,6 +10,7 @@ export default defineEventHandler((event) => {
     }
   }
 
+  const { doctors, hospitals, treatments } = await getWebsiteContent()
   const collections = [
     ...treatments.map((item) => ({ type: 'treatment', title: item.name, path: `/treatments/${item.specialty}/${item.slug}` })),
     ...hospitals.map((item) => ({ type: 'hospital', title: item.name, path: `/hospitals/${item.slug}` })),

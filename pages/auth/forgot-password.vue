@@ -2,7 +2,7 @@
   <div class="stack auth-page">
     <div>
       <span class="eyebrow">Password reset</span>
-      <h2>Request a password reset link</h2>
+      <h2>Request an admin password reset link</h2>
     </div>
     <form class="stack" @submit.prevent="submit">
       <label class="auth-page__field">
@@ -48,7 +48,7 @@ async function submit() {
 
 useSeoMeta(buildSeoMeta({
   title: 'Forgot password',
-  description: 'Request a secure password reset link for the patient portal.',
+  description: 'Request a secure password reset link for the admin portal.',
   path: route.path,
   robots: 'noindex, nofollow'
 }))

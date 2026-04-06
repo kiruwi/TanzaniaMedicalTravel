@@ -14,8 +14,7 @@ import TreatmentCards from '~/components/home/TreatmentCards.vue'
 import { buildHeadLinks, buildSeoMeta } from '~/utils/seo'
 
 const route = useRoute()
-const { all } = useTreatments()
-const items = all()
+const { items } = await useTreatments()
 
 useSeoMeta(buildSeoMeta({
   title: 'Treatments',

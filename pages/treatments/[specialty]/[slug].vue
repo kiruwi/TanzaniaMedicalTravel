@@ -49,10 +49,10 @@ import { createBreadcrumbSchema } from '~/utils/schema'
 
 const route = useRoute()
 const { specialty, slug } = route.params
-const { findBySlug, relatedDoctors, relatedHospitals } = useTreatments()
+const { findBySlug, relatedDoctors, relatedHospitals } = await useTreatments()
 const treatment = findBySlug(specialty, slug)
 
-if (!treatment) {
+if (!treatment.value) {
   throw createError({
     statusCode: 404,
     statusMessage: 'Treatment not found'
@@ -63,8 +63,8 @@ const linkedDoctors = relatedDoctors(treatment)
 const linkedHospitals = relatedHospitals(treatment)
 
 useSeoMeta(buildSeoMeta({
-  title: treatment.name,
-  description: treatment.summary,
+  title: treatment.value.name,
+  description: treatment.value.summary,
   path: route.path
 }))
 
@@ -76,7 +76,7 @@ useHead({
       children: JSON.stringify(createBreadcrumbSchema([
         { name: 'Treatments', path: '/treatments' },
         { name: specialty, path: `/treatments/${specialty}` },
-        { name: treatment.name, path: route.path }
+        { name: treatment.value.name, path: route.path }
       ]))
     }
   ]

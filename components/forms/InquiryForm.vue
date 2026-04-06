@@ -20,7 +20,22 @@
     </div>
     <label class="form-group">
       <span>Treatment interest</span>
-      <input v-model="form.treatment_interest" required type="text" />
+      <select v-model="form.treatment_interest" required>
+        <option disabled value="">Select a treatment</option>
+        <optgroup
+          v-for="group in groupedTreatmentOptions"
+          :key="group.label"
+          :label="group.label"
+        >
+          <option
+            v-for="option in group.options"
+            :key="`${group.label}-${option.value}`"
+            :value="option.value"
+          >
+            {{ option.label }}
+          </option>
+        </optgroup>
+      </select>
     </label>
     <label class="form-group">
       <span>Message</span>
@@ -34,6 +49,8 @@
 </template>
 
 <script setup>
+const { groupedTreatmentOptions } = await useTreatmentOptions()
+
 const form = reactive({
   full_name: '',
   email: '',
@@ -90,12 +107,26 @@ async function submit() {
 }
 
 .form-group input,
+.form-group select,
 .form-group textarea {
   width: 100%;
   padding: 0.9rem 1rem;
   border: 1px solid var(--color-border);
   border-radius: 0.85rem;
   background: #fff;
+}
+
+.form-group select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--color-primary) 50%),
+    linear-gradient(135deg, var(--color-primary) 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.15rem) calc(50% - 0.15rem),
+    calc(100% - 0.85rem) calc(50% - 0.15rem);
+  background-size: 0.35rem 0.35rem, 0.35rem 0.35rem;
+  background-repeat: no-repeat;
+  padding-right: 2.8rem;
 }
 
 .form__status {

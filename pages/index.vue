@@ -17,8 +17,8 @@ import { createOrganizationSchema, createWebsiteSchema } from '~/utils/schema'
 import { testimonials } from '~/utils/mockData'
 
 const route = useRoute()
-const { all } = useTreatments()
-const featuredTreatments = all()
+const { items } = await useTreatments()
+const featuredTreatments = computed(() => items.value.filter((item) => item.featured))
 
 useSeoMeta(buildSeoMeta({
   title: 'Trusted medical travel support in East Africa',

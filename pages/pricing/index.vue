@@ -20,9 +20,9 @@
 <script setup>
 import { formatCurrency } from '~/utils/formatCurrency'
 import { buildHeadLinks, buildSeoMeta } from '~/utils/seo'
-import { treatments } from '~/utils/mockData'
 
 const route = useRoute()
+const { items: treatments } = await useTreatments()
 
 useSeoMeta(buildSeoMeta({
   title: 'Pricing',

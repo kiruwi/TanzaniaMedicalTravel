@@ -1,19 +1,31 @@
-import { doctors, hospitals } from '~/utils/mockData'
+export async function useDoctors() {
+  const { content } = await useWebsiteContent()
 
-export function useDoctors() {
+  const items = computed(() => content.value.doctors || [])
+  const hospitals = computed(() => content.value.hospitals || [])
+
   function all() {
-    return doctors
+    return items
   }
 
   function findBySlug(slug) {
-    return doctors.find((item) => item.slug === slug) || null
+    return computed(() => items.value.find((item) => item.slug === slug) || null)
   }
 
   function linkedHospital(doctor) {
-    return hospitals.find((hospital) => hospital.slug === doctor?.hospitalSlug) || null
+    return computed(() => {
+      const currentDoctor = doctor?.value || doctor
+
+      if (!currentDoctor?.hospitalId) {
+        return null
+      }
+
+      return hospitals.value.find((hospital) => hospital.id === currentDoctor.hospitalId) || null
+    })
   }
 
   return {
+    items,
     all,
     findBySlug,
     linkedHospital

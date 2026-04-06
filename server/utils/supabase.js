@@ -12,11 +12,22 @@ function getServerEnv(...names) {
   return ''
 }
 
-export function getSupabaseAdmin() {
+function getSupabaseConfig() {
   const config = useRuntimeConfig()
   const supabaseUrl =
     config.supabaseUrl ||
     getServerEnv('NUXT_SUPABASE_URL', 'SUPABASE_URL', 'NUXT_PUBLIC_SUPABASE_URL')
+  const supabasePublishableKey =
+    config.public?.supabasePublishableKey ||
+    config.public?.supabaseAnonKey ||
+    config.supabasePublishableKey ||
+    getServerEnv(
+      'NUXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY',
+      'NUXT_PUBLIC_SUPABASE_ANON_KEY',
+      'NUXT_SUPABASE_PUBLISHABLE_KEY',
+      'SUPABASE_PUBLISHABLE_KEY',
+      'SUPABASE_ANON_KEY'
+    )
   const supabaseSecretKey =
     config.supabaseSecretKey ||
     config.supabaseServiceRoleKey ||
@@ -27,6 +38,16 @@ export function getSupabaseAdmin() {
       'SUPABASE_SERVICE_ROLE_KEY'
     )
 
+  return {
+    supabaseUrl,
+    supabasePublishableKey,
+    supabaseSecretKey
+  }
+}
+
+export function getSupabaseAdmin() {
+  const { supabaseUrl, supabaseSecretKey } = getSupabaseConfig()
+
   if (!supabaseUrl || !supabaseSecretKey) {
     return null
   }
@@ -34,6 +55,40 @@ export function getSupabaseAdmin() {
   return createClient(supabaseUrl, supabaseSecretKey, {
     auth: {
       persistSession: false
+    }
+  })
+}
+
+export function getAccessToken(event) {
+  const authorization = getHeader(event, 'authorization')
+
+  if (typeof authorization !== 'string') {
+    return ''
+  }
+
+  const match = authorization.match(/^Bearer\s+(.+)$/i)
+  return match?.[1]?.trim() || ''
+}
+
+export function getSupabaseUser(event) {
+  const { supabaseUrl, supabasePublishableKey } = getSupabaseConfig()
+  const accessToken =
+    event?.context?.accessToken ||
+    (typeof event === 'string' ? event : getAccessToken(event))
+
+  if (!supabaseUrl || !supabasePublishableKey || !accessToken) {
+    return null
+  }
+
+  return createClient(supabaseUrl, supabasePublishableKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false
+    },
+    global: {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
     }
   })
 }

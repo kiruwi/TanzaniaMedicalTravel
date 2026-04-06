@@ -5,21 +5,40 @@ export function useAuth() {
   const session = useState('auth:session', () => null)
   const userRole = useState('auth:role', () => 'guest')
   const syncedUserId = useState('auth:synced-user-id', () => null)
+  const adminEmail = computed(() => String(config.public.adminEmail || '').trim().toLowerCase())
+
+  function normalizeEmail(value) {
+    return String(value || '').trim().toLowerCase()
+  }
+
+  function isAllowedAdminEmail(value) {
+    return Boolean(adminEmail.value) && normalizeEmail(value) === adminEmail.value
+  }
+
+  function buildAdminOnlyError() {
+    return new Error('Access is restricted to the configured admin account.')
+  }
 
   async function syncUser(authUser) {
     if (!authUser?.id || !authUser?.email || syncedUserId.value === authUser.id) {
       return { synced: true }
     }
 
+    if (!isAllowedAdminEmail(authUser.email)) {
+      return {
+        synced: false,
+        reason: buildAdminOnlyError().message
+      }
+    }
+
     try {
       const response = await $fetch('/api/auth/sync-user', {
         method: 'POST',
-        body: {
-          id: authUser.id,
-          email: authUser.email,
-          role: authUser.user_metadata?.role || 'patient',
-          full_name: authUser.user_metadata?.full_name || ''
-        }
+        headers: session.value?.access_token
+          ? {
+              Authorization: `Bearer ${session.value.access_token}`
+            }
+          : undefined
       })
 
       if (response?.synced === false) {
@@ -44,10 +63,26 @@ export function useAuth() {
     const { data } = await nuxtApp.$supabase.auth.getSession()
     session.value = data.session
     user.value = data.session?.user || null
-    userRole.value = data.session?.user?.user_metadata?.role || 'patient'
+
+    if (!data.session?.user) {
+      userRole.value = 'guest'
+      syncedUserId.value = null
+      return session
+    }
+
+    if (!isAllowedAdminEmail(data.session.user.email)) {
+      await signOut()
+      return session
+    }
+
+    userRole.value = 'admin'
 
     if (data.session?.user) {
-      await syncUser(data.session.user)
+      const response = await syncUser(data.session.user)
+
+      if (response?.synced === false) {
+        await signOut()
+      }
     }
 
     return session
@@ -58,24 +93,38 @@ export function useAuth() {
       return { error: new Error('Supabase client is not configured.') }
     }
 
+    if (!isAllowedAdminEmail(credentials?.email)) {
+      return { error: buildAdminOnlyError() }
+    }
+
     const response = await nuxtApp.$supabase.auth.signInWithPassword(credentials)
+
+    if (response.error) {
+      return response
+    }
+
     await getSession()
+
+    if (!session.value || userRole.value !== 'admin') {
+      return { error: buildAdminOnlyError() }
+    }
+
     return response
   }
 
-  async function signUp(credentials) {
-    if (!nuxtApp.$supabase) {
-      return { error: new Error('Supabase client is not configured.') }
+  async function signUp() {
+    return {
+      error: new Error('Self-service account creation is disabled.')
     }
-
-    const response = await nuxtApp.$supabase.auth.signUp(credentials)
-    await getSession()
-    return response
   }
 
   async function requestPasswordReset(email, next = '/auth/reset-password') {
     if (!nuxtApp.$supabase) {
       return { error: new Error('Supabase client is not configured.') }
+    }
+
+    if (!isAllowedAdminEmail(email)) {
+      return { error: buildAdminOnlyError() }
     }
 
     const origin = window.location.origin || config.public.siteUrl
@@ -99,18 +148,9 @@ export function useAuth() {
   }
 
   async function signInWithGoogle(next = '/patient') {
-    if (!nuxtApp.$supabase) {
-      return { error: new Error('Supabase client is not configured.') }
+    return {
+      error: new Error('Google sign-in is disabled for this portal.')
     }
-
-    const origin = window.location.origin || config.public.siteUrl
-
-    return nuxtApp.$supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${origin}${next}`
-      }
-    })
   }
 
   async function signOut() {
@@ -125,6 +165,7 @@ export function useAuth() {
   }
 
   return {
+    adminEmail,
     user,
     session,
     userRole,

@@ -23,10 +23,10 @@ import { buildHeadLinks, buildSeoMeta } from '~/utils/seo'
 import { createBreadcrumbSchema } from '~/utils/schema'
 
 const route = useRoute()
-const { findBySlug, linkedHospital } = useDoctors()
+const { findBySlug, linkedHospital } = await useDoctors()
 const doctor = findBySlug(route.params.slug)
 
-if (!doctor) {
+if (!doctor.value) {
   throw createError({
     statusCode: 404,
     statusMessage: 'Doctor not found'
@@ -36,8 +36,8 @@ if (!doctor) {
 const hospital = linkedHospital(doctor)
 
 useSeoMeta(buildSeoMeta({
-  title: doctor.name,
-  description: doctor.summary,
+  title: doctor.value.name,
+  description: doctor.value.summary,
   path: route.path
 }))
 
@@ -48,7 +48,7 @@ useHead({
       type: 'application/ld+json',
       children: JSON.stringify(createBreadcrumbSchema([
         { name: 'Doctors', path: '/doctors' },
-        { name: doctor.name, path: route.path }
+        { name: doctor.value.name, path: route.path }
       ]))
     }
   ]

@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async () => {
     return navigateTo('/auth/login')
   }
 
-  if (!['patient', 'coordinator', 'admin'].includes(userRole.value)) {
+  if (userRole.value !== 'admin') {
     return navigateTo('/auth/login')
   }
 })

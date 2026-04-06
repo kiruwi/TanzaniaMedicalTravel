@@ -1,13 +1,26 @@
+import { assertAuthenticated } from '~/server/utils/permissions'
 import { getSupabaseAdmin } from '~/server/utils/supabase'
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event)
+  assertAuthenticated(event)
+  const config = useRuntimeConfig(event)
+  const adminEmail = String(config.adminEmail || config.public.adminEmail || '').trim().toLowerCase()
+  const authUser = event.context.user
+  const userId = event.context.userId
+  const email = String(authUser?.email || '').trim().toLowerCase()
 
-  if (!body?.id || !body?.email) {
+  if (!userId || !email) {
     throw createError({
-      statusCode: 400,
-      statusMessage: 'User id and email are required'
+      statusCode: 401,
+      statusMessage: 'Authenticated user details are required'
     })
+  }
+
+  if (!adminEmail || email !== adminEmail) {
+    return {
+      synced: false,
+      reason: 'Access is restricted to the configured admin account.'
+    }
   }
 
   const supabase = getSupabaseAdmin()
@@ -20,14 +33,10 @@ export default defineEventHandler(async (event) => {
   }
 
   const payload = {
-    id: body.id,
-    email: body.email,
-    role: body.role || 'patient'
+    id: userId,
+    email: authUser.email,
+    role: 'admin'
   }
-
-  const fullName = String(body.full_name || '').trim()
-  const [firstName = '', ...lastNameParts] = fullName.split(/\s+/).filter(Boolean)
-  const lastName = lastNameParts.join(' ')
 
   const { data: user, error: userError } = await supabase
     .from('users')
@@ -42,34 +51,8 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  let profile = null
-
-  if (payload.role === 'patient') {
-    const profilePayload = {
-      user_id: body.id,
-      first_name: firstName || null,
-      last_name: lastName || null
-    }
-
-    const { data: syncedProfile, error: profileError } = await supabase
-      .from('patient_profiles')
-      .upsert(profilePayload, { onConflict: 'user_id' })
-      .select()
-      .single()
-
-    if (profileError) {
-      throw createError({
-        statusCode: 500,
-        statusMessage: profileError.message
-      })
-    }
-
-    profile = syncedProfile
-  }
-
   return {
     synced: true,
-    user,
-    profile
+    user
   }
 })

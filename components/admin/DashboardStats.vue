@@ -1,8 +1,9 @@
 <template>
   <section class="grid-four">
     <article v-for="item in items" :key="item.label" class="surface-card stat-card">
+      <span class="stat-card__label">{{ item.label }}</span>
       <strong>{{ item.value }}</strong>
-      <span>{{ item.label }}</span>
+      <p>{{ item.note }}</p>
     </article>
   </section>
 </template>
@@ -25,8 +26,16 @@ defineProps({
 
 .stat-card {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.5rem;
   padding: 1.25rem;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.stat-card__label {
+  color: var(--color-text-soft);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .stat-card strong {
@@ -34,7 +43,8 @@ defineProps({
   font-size: 2rem;
 }
 
-.stat-card span {
+.stat-card p {
+  margin-bottom: 0;
   color: var(--color-text-soft);
 }
 

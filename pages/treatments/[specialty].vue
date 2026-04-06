@@ -18,7 +18,7 @@ import { createBreadcrumbSchema } from '~/utils/schema'
 
 const route = useRoute()
 const specialty = route.params.specialty
-const { bySpecialty } = useTreatments()
+const { bySpecialty } = await useTreatments()
 const items = bySpecialty(specialty)
 
 const heading = computed(() => `${specialty.charAt(0).toUpperCase()}${specialty.slice(1)} treatment pathways`)

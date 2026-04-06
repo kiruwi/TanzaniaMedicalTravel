@@ -1,6 +1,7 @@
 import Lenis from 'lenis'
 
 export default defineNuxtPlugin((nuxtApp) => {
+  const route = useRoute()
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
   const revealSelector = [
     '.hero__copy h1',
@@ -16,6 +17,17 @@ export default defineNuxtPlugin((nuxtApp) => {
   let lenis = null
   let observer = null
   let rafId = 0
+
+  const isAdminRoute = () => route.path.startsWith('/admin')
+
+  const clearLenisState = () => {
+    document.documentElement.classList.remove(
+      'lenis',
+      'lenis-smooth',
+      'lenis-stopped',
+      'lenis-scrolling'
+    )
+  }
 
   const revealElements = () => {
     if (!observer) {
@@ -54,14 +66,22 @@ export default defineNuxtPlugin((nuxtApp) => {
     revealElements()
   }
 
-  const refreshMotion = () => {
-    requestAnimationFrame(() => {
-      createObserver()
-      lenis?.resize()
-    })
+  const stopLenis = () => {
+    if (rafId) {
+      window.cancelAnimationFrame(rafId)
+      rafId = 0
+    }
+
+    lenis?.destroy()
+    lenis = null
+    clearLenisState()
   }
 
-  if (!prefersReducedMotion.matches) {
+  const startLenis = () => {
+    if (lenis || prefersReducedMotion.matches || isAdminRoute()) {
+      return
+    }
+
     lenis = new Lenis({
       duration: 1.1,
       smoothWheel: true,
@@ -76,6 +96,23 @@ export default defineNuxtPlugin((nuxtApp) => {
     rafId = window.requestAnimationFrame(raf)
   }
 
+  const syncLenis = () => {
+    if (isAdminRoute()) {
+      stopLenis()
+      return
+    }
+
+    startLenis()
+    lenis?.resize()
+  }
+
+  const refreshMotion = () => {
+    requestAnimationFrame(() => {
+      createObserver()
+      syncLenis()
+    })
+  }
+
   nuxtApp.hook('app:mounted', refreshMotion)
   nuxtApp.hook('page:finish', refreshMotion)
 
@@ -84,9 +121,6 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook('app:beforeUnmount', () => {
     window.removeEventListener('resize', refreshMotion)
     destroyObserver()
-    if (rafId) {
-      window.cancelAnimationFrame(rafId)
-    }
-    lenis?.destroy()
+    stopLenis()
   })
 })

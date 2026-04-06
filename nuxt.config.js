@@ -2,6 +2,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 import { fileURLToPath } from 'node:url'
 
 const siteUrl = process.env.NUXT_SITE_URL || 'https://example-medical-travel.com'
+const adminEmail = process.env.NUXT_ADMIN_EMAIL || process.env.NUXT_PUBLIC_ADMIN_EMAIL || ''
 const supabaseUrl =
   process.env.NUXT_SUPABASE_URL ||
   process.env.NUXT_PUBLIC_SUPABASE_URL ||
@@ -47,6 +48,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
     siteUrl,
+    adminEmail,
     supabaseUrl,
     supabaseKey:
       process.env.NUXT_SUPABASE_KEY ||
@@ -64,6 +66,7 @@ export default defineNuxtConfig({
     strapiToken: process.env.STRAPI_TOKEN || '',
     public: {
       siteUrl,
+      adminEmail,
       siteName: 'Tanzania Medical Travel',
       siteDescription: 'Coordinated medical travel to trusted hospitals, specialists, and recovery destinations in East Africa.',
       supabaseUrl,

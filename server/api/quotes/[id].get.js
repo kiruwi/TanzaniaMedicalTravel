@@ -1,15 +1,15 @@
 import { assertRole } from '~/server/utils/permissions'
-import { getSupabaseAdmin } from '~/server/utils/supabase'
+import { getSupabaseUser } from '~/server/utils/supabase'
 
 export default defineEventHandler(async (event) => {
-  assertRole(event, ['patient', 'coordinator', 'admin'])
-  const supabase = getSupabaseAdmin()
+  const role = assertRole(event, ['patient', 'coordinator', 'admin'])
+  const supabase = getSupabaseUser(event)
   const quoteId = getRouterParam(event, 'id')
 
   if (!supabase) {
     throw createError({
       statusCode: 500,
-      statusMessage: 'Supabase service credentials are not configured'
+      statusMessage: 'Supabase auth client is not configured'
     })
   }
 
@@ -33,17 +33,21 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const { data: auditLog } = await supabase
-    .from('audit_logs')
-    .select('metadata')
-    .eq('entity_type', 'quote')
-    .eq('entity_id', quoteId)
-    .eq('action', 'create')
-    .order('created_at', { ascending: false })
-    .limit(1)
-    .maybeSingle()
+  let request = {}
 
-  const request = auditLog?.metadata?.request || {}
+  if (role === 'admin') {
+    const { data: auditLog } = await supabase
+      .from('audit_logs')
+      .select('metadata')
+      .eq('entity_type', 'quote')
+      .eq('entity_id', quoteId)
+      .eq('action', 'create')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+
+    request = auditLog?.metadata?.request || {}
+  }
 
   return {
     quote: {

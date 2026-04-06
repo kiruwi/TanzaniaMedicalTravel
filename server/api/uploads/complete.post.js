@@ -1,17 +1,18 @@
 import { assertRole } from '~/server/utils/permissions'
-import { getSupabaseAdmin, normalizeUuid } from '~/server/utils/supabase'
+import { getSupabaseAdmin, getSupabaseUser, normalizeUuid } from '~/server/utils/supabase'
 import { uploadCompleteSchema, validateBody } from '~/server/utils/validators'
 
 export default defineEventHandler(async (event) => {
   assertRole(event, ['patient', 'coordinator', 'admin'])
   const input = await validateBody(event, uploadCompleteSchema)
-  const supabase = getSupabaseAdmin()
+  const supabase = getSupabaseUser(event)
+  const adminSupabase = getSupabaseAdmin()
   const actorId = normalizeUuid(event.context.userId)
 
   if (!supabase) {
     throw createError({
       statusCode: 500,
-      statusMessage: 'Supabase service credentials are not configured'
+      statusMessage: 'Supabase auth client is not configured'
     })
   }
 
@@ -53,24 +54,26 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const { error: auditError } = await supabase
-    .from('audit_logs')
-    .insert({
-      actor_id: actorId,
-      entity_type: 'medical_document',
-      entity_id: document.id,
-      action: 'upload_complete',
-      metadata: {
-        file_path: input.file_path,
-        category: input.category
-      }
-    })
+  if (adminSupabase) {
+    const { error: auditError } = await adminSupabase
+      .from('audit_logs')
+      .insert({
+        actor_id: actorId,
+        entity_type: 'medical_document',
+        entity_id: document.id,
+        action: 'upload_complete',
+        metadata: {
+          file_path: input.file_path,
+          category: input.category
+        }
+      })
 
-  if (auditError) {
-    console.error('Failed to write upload audit log', {
-      documentId: document.id,
-      error: auditError.message
-    })
+    if (auditError) {
+      console.error('Failed to write upload audit log', {
+        documentId: document.id,
+        error: auditError.message
+      })
+    }
   }
 
   return {

@@ -2,8 +2,8 @@
   <div>
     <div class="stack auth-page">
       <div>
-        <span class="eyebrow">Login</span>
-        <h2>Access your patient portal</h2>
+        <span class="eyebrow">Admin login</span>
+        <h2>Access the operations dashboard</h2>
       </div>
       <form class="stack" @submit.prevent="submit">
         <label class="auth-page__field">
@@ -19,15 +19,10 @@
         </button>
         <p v-if="status">{{ status }}</p>
       </form>
-      <div class="auth-page__divider">or</div>
-      <button class="button button--ghost auth-page__oauth" :disabled="pending" type="button" @click="signInGoogle">
-        Sign in with Google
-      </button>
-      <NuxtLink to="/auth/forgot-password">Forgot password?</NuxtLink>
-      <p>
-        No account?
-        <NuxtLink to="/auth/register">Create account</NuxtLink>
+      <p class="auth-page__note">
+        Only the configured admin account can sign in.
       </p>
+      <NuxtLink to="/auth/forgot-password">Forgot password?</NuxtLink>
     </div>
   </div>
 </template>
@@ -41,7 +36,7 @@ import { buildHeadLinks, buildSeoMeta } from '~/utils/seo'
 
 const route = useRoute()
 const router = useRouter()
-const { signIn, signInWithGoogle } = useAuth()
+const { signIn } = useAuth()
 
 const email = ref('')
 const password = ref('')
@@ -49,8 +44,8 @@ const pending = ref(false)
 const status = ref('')
 
 useSeoMeta(buildSeoMeta({
-  title: 'Patient login',
-  description: 'Secure access to patient cases, documents, quotes, and appointments.',
+  title: 'Admin login',
+  description: 'Secure access to the operations dashboard for inquiries, patients, payments, and invoicing.',
   path: route.path,
   robots: 'noindex, nofollow'
 }))
@@ -74,19 +69,7 @@ async function submit() {
     return
   }
 
-  router.push('/patient')
-}
-
-async function signInGoogle() {
-  pending.value = true
-  status.value = ''
-
-  const { error } = await signInWithGoogle('/patient')
-
-  if (error) {
-    pending.value = false
-    status.value = error.message || 'Unable to continue with Google.'
-  }
+  router.push('/admin')
 }
 </script>
 
@@ -102,12 +85,7 @@ async function signInGoogle() {
   border-radius: 0.85rem;
 }
 
-.auth-page__divider {
-  text-align: center;
+.auth-page__note {
   color: var(--color-text-soft);
-}
-
-.auth-page__oauth {
-  width: 100%;
 }
 </style>

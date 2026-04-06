@@ -1,14 +1,14 @@
 import { assertRole } from '~/server/utils/permissions'
-import { getSupabaseAdmin } from '~/server/utils/supabase'
+import { getSupabaseUser } from '~/server/utils/supabase'
 
 export default defineEventHandler(async (event) => {
   assertRole(event, ['admin'])
-  const supabase = getSupabaseAdmin()
+  const supabase = getSupabaseUser(event)
 
   if (!supabase) {
     throw createError({
       statusCode: 500,
-      statusMessage: 'Supabase service credentials are not configured'
+      statusMessage: 'Supabase auth client is not configured'
     })
   }
 

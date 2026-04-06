@@ -48,19 +48,24 @@ const pageTitle = computed(() => {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 280px 1fr;
+  background:
+    radial-gradient(circle at top left, rgba(217, 119, 6, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(245, 248, 247, 1), rgba(238, 245, 243, 0.88));
 }
 
 .admin-layout__sidebar {
-  --color-paragraph: #d4defd;
   padding: 2rem 1.5rem;
-  background: #111827;
-  color: #eef2ff;
+  background:
+    linear-gradient(180deg, rgba(6, 60, 55, 0.98), rgba(15, 118, 110, 0.94)),
+    var(--color-heading);
+  color: rgba(255, 255, 255, 0.94);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .admin-layout__brand {
   display: inline-flex;
   margin-bottom: 2rem;
-  color: #fbbf24;
+  color: #fbd38d;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -74,11 +79,18 @@ const pageTitle = computed(() => {
 .admin-layout__link {
   padding: 0.8rem 1rem;
   border-radius: 0.85rem;
-  color: #d4defd;
+  color: rgba(255, 255, 255, 0.78);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.admin-layout__link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  transform: translateX(2px);
 }
 
 .admin-layout__link.router-link-active {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.14);
   color: #fff;
 }
 
@@ -92,6 +104,15 @@ const pageTitle = computed(() => {
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 2rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgba(15, 118, 110, 0.12);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.68);
+  backdrop-filter: blur(14px);
+}
+
+.admin-layout__header .eyebrow {
+  display: inline-flex;
 }
 
 @media (max-width: 900px) {
