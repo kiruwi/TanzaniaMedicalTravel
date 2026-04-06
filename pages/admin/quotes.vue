@@ -29,7 +29,7 @@
           </div>
           <div class="quotes-list__header-actions">
             <span class="status-badge">{{ quotes.length }} records</span>
-            <button class="button button--ghost" :disabled="pendingList" type="button" @click="loadQuotes">
+            <button class="button button--ghost" :disabled="pendingList" type="button" @click="loadQuotes()">
               {{ pendingList ? 'Refreshing...' : 'Refresh' }}
             </button>
           </div>
@@ -214,6 +214,10 @@ const pendingDetail = ref(false)
 const pendingApprove = ref(false)
 const approvedCount = computed(() => quotes.value.filter((quote) => quote.status === 'approved').length)
 
+function normalizeQuoteId(value) {
+  return typeof value === 'string' ? value : ''
+}
+
 async function loadQuotes(preferredQuoteId = '') {
   pendingList.value = true
   errorMessage.value = ''
@@ -222,7 +226,11 @@ async function loadQuotes(preferredQuoteId = '') {
     const response = await request('/api/quotes/list')
     quotes.value = response.quotes || []
 
-    const nextQuoteId = preferredQuoteId || selectedQuoteId.value || quotes.value[0]?.id || ''
+    const nextQuoteId =
+      normalizeQuoteId(preferredQuoteId) ||
+      normalizeQuoteId(selectedQuoteId.value) ||
+      normalizeQuoteId(quotes.value[0]?.id) ||
+      ''
 
     if (nextQuoteId) {
       await selectQuote(nextQuoteId)
@@ -238,12 +246,18 @@ async function loadQuotes(preferredQuoteId = '') {
 }
 
 async function selectQuote(quoteId) {
-  selectedQuoteId.value = quoteId
+  const normalizedQuoteId = normalizeQuoteId(quoteId)
+
+  if (!normalizedQuoteId) {
+    return
+  }
+
+  selectedQuoteId.value = normalizedQuoteId
   pendingDetail.value = true
   errorMessage.value = ''
 
   try {
-    const response = await request(`/api/quotes/${quoteId}`)
+    const response = await request(`/api/quotes/${normalizedQuoteId}`)
     selectedQuote.value = response.quote || null
   } catch (error) {
     selectedQuote.value = null
