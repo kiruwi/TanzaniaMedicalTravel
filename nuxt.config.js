@@ -2,14 +2,23 @@ import { defineNuxtConfig } from 'nuxt/config'
 import { fileURLToPath } from 'node:url'
 
 const siteUrl = process.env.NUXT_SITE_URL || 'https://example-medical-travel.com'
-const supabaseUrl = process.env.NUXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || ''
+const supabaseUrl =
+  process.env.NUXT_SUPABASE_URL ||
+  process.env.NUXT_PUBLIC_SUPABASE_URL ||
+  process.env.SUPABASE_URL ||
+  ''
 const supabasePublishableKey =
+  process.env.NUXT_PUBLIC_SUPABASE_KEY ||
   process.env.NUXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
   process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY ||
+  process.env.NUXT_SUPABASE_KEY ||
+  process.env.NUXT_SUPABASE_PUBLISHABLE_KEY ||
   process.env.SUPABASE_PUBLISHABLE_KEY ||
   process.env.SUPABASE_KEY ||
   ''
 const supabaseSecretKey =
+  process.env.NUXT_SUPABASE_SECRET_KEY ||
+  process.env.NUXT_SUPABASE_SERVICE_ROLE_KEY ||
   process.env.SUPABASE_SECRET_KEY ||
   process.env.SUPABASE_SERVICE_ROLE_KEY ||
   ''
@@ -39,7 +48,12 @@ export default defineNuxtConfig({
   runtimeConfig: {
     siteUrl,
     supabaseUrl,
-    supabaseKey: process.env.SUPABASE_KEY || process.env.SUPABASE_PUBLISHABLE_KEY || '',
+    supabaseKey:
+      process.env.NUXT_SUPABASE_KEY ||
+      process.env.NUXT_SUPABASE_PUBLISHABLE_KEY ||
+      process.env.SUPABASE_KEY ||
+      process.env.SUPABASE_PUBLISHABLE_KEY ||
+      '',
     supabasePublishableKey,
     supabaseSecretKey,
     supabaseServiceRoleKey: supabaseSecretKey,
@@ -53,7 +67,14 @@ export default defineNuxtConfig({
       siteName: 'Tanzania Medical Travel',
       siteDescription: 'Coordinated medical travel to trusted hospitals, specialists, and recovery destinations in East Africa.',
       supabaseUrl,
-      supabaseKey: process.env.SUPABASE_KEY || process.env.SUPABASE_PUBLISHABLE_KEY || '',
+      supabaseKey:
+        process.env.NUXT_PUBLIC_SUPABASE_KEY ||
+        process.env.NUXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+        process.env.NUXT_SUPABASE_KEY ||
+        process.env.NUXT_SUPABASE_PUBLISHABLE_KEY ||
+        process.env.SUPABASE_KEY ||
+        process.env.SUPABASE_PUBLISHABLE_KEY ||
+        '',
       supabasePublishableKey,
       supabaseAnonKey: supabasePublishableKey,
       strapiUrl: process.env.NUXT_PUBLIC_STRAPI_URL || process.env.STRAPI_URL || '',

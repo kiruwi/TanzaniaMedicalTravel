@@ -1,14 +1,37 @@
 import { createClient } from '@supabase/supabase-js'
 
+function getServerEnv(...names) {
+  for (const name of names) {
+    const value = process.env[name]
+
+    if (typeof value === 'string' && value.trim()) {
+      return value
+    }
+  }
+
+  return ''
+}
+
 export function getSupabaseAdmin() {
   const config = useRuntimeConfig()
-  const supabaseSecretKey = config.supabaseSecretKey || config.supabaseServiceRoleKey
+  const supabaseUrl =
+    config.supabaseUrl ||
+    getServerEnv('NUXT_SUPABASE_URL', 'SUPABASE_URL', 'NUXT_PUBLIC_SUPABASE_URL')
+  const supabaseSecretKey =
+    config.supabaseSecretKey ||
+    config.supabaseServiceRoleKey ||
+    getServerEnv(
+      'NUXT_SUPABASE_SECRET_KEY',
+      'NUXT_SUPABASE_SERVICE_ROLE_KEY',
+      'SUPABASE_SECRET_KEY',
+      'SUPABASE_SERVICE_ROLE_KEY'
+    )
 
-  if (!config.supabaseUrl || !supabaseSecretKey) {
+  if (!supabaseUrl || !supabaseSecretKey) {
     return null
   }
 
-  return createClient(config.supabaseUrl, supabaseSecretKey, {
+  return createClient(supabaseUrl, supabaseSecretKey, {
     auth: {
       persistSession: false
     }
