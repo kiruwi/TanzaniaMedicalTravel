@@ -77,21 +77,28 @@ onMounted(loadAccessLog)
 .access-log-page__filters {
   display: flex;
   align-items: end;
-  gap: 1rem;
+  gap: 0.85rem;
   flex-wrap: wrap;
+  padding: 1rem;
 }
 
 .access-log-page__filters label {
   display: grid;
   gap: 0.4rem;
-  min-width: 220px;
+  flex: 1 1 220px;
+  min-width: min(220px, 100%);
 }
 
 .access-log-page__filters input,
 .access-log-page__filters select {
+  width: 100%;
   padding: 0.85rem 1rem;
   border: 1px solid var(--color-border);
   border-radius: 0.85rem;
+}
+
+.access-log-page__filters .button {
+  flex: 0 0 auto;
 }
 
 .access-log-page__error {
@@ -101,5 +108,15 @@ onMounted(loadAccessLog)
   border-radius: var(--radius-sm);
   background: rgba(180, 35, 24, 0.06);
   color: var(--color-danger);
+}
+
+@media (max-width: 640px) {
+  .access-log-page__filters {
+    align-items: stretch;
+  }
+
+  .access-log-page__filters .button {
+    width: 100%;
+  }
 }
 </style>

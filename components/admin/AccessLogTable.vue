@@ -95,6 +95,7 @@ function formatOrigin(item) {
 .access-log {
   display: grid;
   gap: 1rem;
+  padding: 1.25rem;
 }
 
 .access-log__header {
@@ -111,6 +112,7 @@ function formatOrigin(item) {
 }
 
 .access-log__scroll {
+  margin-inline: -1.25rem;
   overflow-x: auto;
 }
 
@@ -122,7 +124,7 @@ function formatOrigin(item) {
 
 .access-log th,
 .access-log td {
-  padding: 0.9rem 0.95rem;
+  padding: 0.85rem 1.25rem;
   border-top: 1px solid rgba(15, 118, 110, 0.1);
   text-align: left;
   vertical-align: top;
@@ -143,12 +145,29 @@ function formatOrigin(item) {
 }
 
 .access-log td code {
-  white-space: nowrap;
+  display: inline-block;
+  max-width: 28rem;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
 }
 
 @media (max-width: 900px) {
   .access-log__header {
     flex-direction: column;
+  }
+
+  .access-log {
+    padding: 1rem;
+  }
+
+  .access-log__scroll {
+    margin-inline: -1rem;
+  }
+
+  .access-log th,
+  .access-log td {
+    padding: 0.8rem 1rem;
   }
 }
 </style>
