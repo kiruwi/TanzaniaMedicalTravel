@@ -19,7 +19,8 @@
 
 <script setup>
 definePageMeta({
-  layout: 'auth'
+  layout: 'auth',
+  path: '/tmt-admin/forgot-password'
 })
 
 import { buildHeadLinks, buildSeoMeta } from '~/utils/seo'

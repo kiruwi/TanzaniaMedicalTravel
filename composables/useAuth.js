@@ -118,7 +118,7 @@ export function useAuth() {
     }
   }
 
-  async function requestPasswordReset(email, next = '/auth/reset-password') {
+  async function requestPasswordReset(email, next = '/tmt-admin/reset-password') {
     if (!nuxtApp.$supabase) {
       return { error: new Error('Supabase client is not configured.') }
     }

@@ -32,11 +32,20 @@
         title="Upcoming bookings"
         description="Travel and accommodation items scheduled from today onward."
       />
+      <AccessLogTable
+        :items="recentAccessLogs"
+        title="Recent access log"
+        description="Append-only admin access events stored separately from operational records."
+        empty-message="No access events have been recorded yet."
+        cta-label="View full access log"
+        cta-to="/tmt-admin/access-log"
+      />
     </template>
   </div>
 </template>
 
 <script setup>
+import AccessLogTable from '~/components/admin/AccessLogTable.vue'
 import BookingTable from '~/components/admin/BookingTable.vue'
 import DashboardStats from '~/components/admin/DashboardStats.vue'
 import FileReviewPanel from '~/components/admin/FileReviewPanel.vue'
@@ -44,7 +53,8 @@ import LeadTable from '~/components/admin/LeadTable.vue'
 
 definePageMeta({
   layout: 'admin',
-  middleware: ['admin']
+  middleware: ['admin'],
+  path: '/tmt-admin'
 })
 
 const { request } = useAdminApi()
@@ -54,6 +64,7 @@ const dashboardStats = ref([])
 const recentInquiries = ref([])
 const documentQueue = ref([])
 const upcomingBookings = ref([])
+const recentAccessLogs = ref([])
 
 async function loadDashboard() {
   pending.value = true
@@ -65,6 +76,7 @@ async function loadDashboard() {
     recentInquiries.value = response.recent_inquiries || []
     documentQueue.value = response.document_queue || []
     upcomingBookings.value = response.upcoming_bookings || []
+    recentAccessLogs.value = response.recent_access_logs || []
   } catch (error) {
     errorMessage.value = error?.data?.statusMessage || error?.message || 'Unable to load dashboard data.'
   } finally {

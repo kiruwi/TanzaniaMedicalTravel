@@ -1,10 +1,8 @@
 User-agent: *
 Allow: /
-Disallow: /admin
-Disallow: /admin/
+Disallow: /tmt-admin
+Disallow: /tmt-admin/
 Disallow: /patient
 Disallow: /patient/
-Disallow: /auth
-Disallow: /auth/
 
 Sitemap: https://example-medical-travel.com/sitemap.xml

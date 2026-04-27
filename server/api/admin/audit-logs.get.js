@@ -1,5 +1,6 @@
 import { assertRole } from '~/server/utils/permissions'
 import { getSupabaseUser } from '~/server/utils/supabase'
+import { searchAccessLogs } from '~/server/utils/access-log'
 
 export default defineEventHandler(async (event) => {
   assertRole(event, ['admin'])
@@ -26,6 +27,9 @@ export default defineEventHandler(async (event) => {
   }
 
   return {
-    audit_logs: auditLogs || []
+    audit_logs: auditLogs || [],
+    access_logs: await searchAccessLogs({
+      limit: 100
+    })
   }
 })

@@ -34,7 +34,6 @@
         <h3>Patient support</h3>
         <ul class="site-footer__links">
           <li><a :href="`mailto:${supportEmail}`">{{ supportEmail }}</a></li>
-          <li><NuxtLink to="/auth/login">Patient login</NuxtLink></li>
           <li><NuxtLink to="/pricing">Pricing</NuxtLink></li>
         </ul>
       </div>

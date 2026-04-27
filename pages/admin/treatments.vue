@@ -121,7 +121,8 @@
 <script setup>
 definePageMeta({
   layout: 'admin',
-  middleware: ['admin']
+  middleware: ['admin'],
+  path: '/tmt-admin/treatments'
 })
 
 const { request } = useAdminApi()

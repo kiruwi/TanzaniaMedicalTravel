@@ -7,13 +7,14 @@
     <p class="auth-page__copy">
       This portal is restricted to the configured admin account. New accounts cannot be created from the website.
     </p>
-    <NuxtLink class="button" to="/auth/login">Back to login</NuxtLink>
+    <NuxtLink class="button" to="/tmt-admin/login">Back to login</NuxtLink>
   </div>
 </template>
 
 <script setup>
 definePageMeta({
-  layout: 'auth'
+  layout: 'auth',
+  path: '/tmt-admin/register'
 })
 
 import { buildHeadLinks, buildSeoMeta } from '~/utils/seo'

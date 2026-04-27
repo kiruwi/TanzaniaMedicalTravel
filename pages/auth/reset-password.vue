@@ -23,7 +23,8 @@
 
 <script setup>
 definePageMeta({
-  layout: 'auth'
+  layout: 'auth',
+  path: '/tmt-admin/reset-password'
 })
 
 import { buildHeadLinks, buildSeoMeta } from '~/utils/seo'
@@ -64,7 +65,7 @@ async function submit() {
 
   status.value = 'Password updated. Redirecting to login...'
   setTimeout(() => {
-    router.push('/auth/login')
+    router.push('/tmt-admin/login')
   }, 1200)
 }
 

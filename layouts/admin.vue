@@ -1,7 +1,7 @@
 <template>
   <div class="admin-layout">
     <aside class="admin-layout__sidebar">
-      <NuxtLink class="admin-layout__brand" to="/admin">Operations desk</NuxtLink>
+      <NuxtLink class="admin-layout__brand" to="/tmt-admin">Operations desk</NuxtLink>
       <nav aria-label="Admin portal">
         <NuxtLink v-for="item in navItems" :key="item.to" :to="item.to" class="admin-layout__link">
           {{ item.label }}
@@ -23,24 +23,51 @@
 
 <script setup>
 const route = useRoute()
+const { request } = useAdminApi()
 
 const navItems = [
-  { label: 'Dashboard', to: '/admin' },
-  { label: 'Leads', to: '/admin/leads' },
-  { label: 'Patients', to: '/admin/patients' },
-  { label: 'Cases', to: '/admin/cases' },
-  { label: 'Quotes', to: '/admin/quotes' },
-  { label: 'Bookings', to: '/admin/bookings' },
-  { label: 'Hospitals', to: '/admin/hospitals' },
-  { label: 'Doctors', to: '/admin/doctors' },
-  { label: 'Treatments', to: '/admin/treatments' },
-  { label: 'Content', to: '/admin/content' }
+  { label: 'Dashboard', to: '/tmt-admin' },
+  { label: 'Access log', to: '/tmt-admin/access-log' },
+  { label: 'Leads', to: '/tmt-admin/leads' },
+  { label: 'Patients', to: '/tmt-admin/patients' },
+  { label: 'Cases', to: '/tmt-admin/cases' },
+  { label: 'Quotes', to: '/tmt-admin/quotes' },
+  { label: 'Bookings', to: '/tmt-admin/bookings' },
+  { label: 'Hospitals', to: '/tmt-admin/hospitals' },
+  { label: 'Doctors', to: '/tmt-admin/doctors' },
+  { label: 'Treatments', to: '/tmt-admin/treatments' },
+  { label: 'Content', to: '/tmt-admin/content' }
 ]
 
 const pageTitle = computed(() => {
   const match = navItems.find((item) => route.path === item.to)
   return match?.label || 'Admin'
 })
+
+async function logPageAccess(path) {
+  try {
+    await request('/api/admin/access-log/page', {
+      method: 'POST',
+      body: {
+        path
+      }
+    })
+  } catch (error) {
+    console.error('Failed to write admin page access log', error)
+  }
+}
+
+watch(
+  () => route.fullPath,
+  (path) => {
+    if (process.client && path.startsWith('/tmt-admin')) {
+      void logPageAccess(path)
+    }
+  },
+  {
+    immediate: true
+  }
+)
 </script>
 
 <style scoped>

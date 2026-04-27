@@ -14,7 +14,8 @@ import LeadTable from '~/components/admin/LeadTable.vue'
 
 definePageMeta({
   layout: 'admin',
-  middleware: ['admin']
+  middleware: ['admin'],
+  path: '/tmt-admin/leads'
 })
 
 const { request } = useAdminApi()

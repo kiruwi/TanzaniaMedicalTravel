@@ -3,6 +3,6 @@ export default defineNuxtRouteMiddleware(async () => {
   const session = await getSession()
 
   if (!session.value) {
-    return navigateTo('/auth/login')
+    return navigateTo('/tmt-admin/login')
   }
 })

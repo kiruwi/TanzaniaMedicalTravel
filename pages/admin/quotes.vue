@@ -201,7 +201,8 @@ import { formatDate } from '~/utils/formatDate'
 
 definePageMeta({
   layout: 'admin',
-  middleware: ['admin']
+  middleware: ['admin'],
+  path: '/tmt-admin/quotes'
 })
 
 const { request } = useAdminApi()

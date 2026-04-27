@@ -22,14 +22,15 @@
       <p class="auth-page__note">
         Only the configured admin account can sign in.
       </p>
-      <NuxtLink to="/auth/forgot-password">Forgot password?</NuxtLink>
+      <NuxtLink to="/tmt-admin/forgot-password">Forgot password?</NuxtLink>
     </div>
   </div>
 </template>
 
 <script setup>
 definePageMeta({
-  layout: 'auth'
+  layout: 'auth',
+  path: '/tmt-admin/login'
 })
 
 import { buildHeadLinks, buildSeoMeta } from '~/utils/seo'
@@ -69,7 +70,7 @@ async function submit() {
     return
   }
 
-  router.push('/admin')
+  router.push('/tmt-admin')
 }
 </script>
 

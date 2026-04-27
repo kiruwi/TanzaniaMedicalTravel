@@ -1,5 +1,6 @@
 import { assertRole } from '~/server/utils/permissions'
 import { getSupabaseUser } from '~/server/utils/supabase'
+import { searchAccessLogs } from '~/server/utils/access-log'
 
 export default defineEventHandler(async (event) => {
   assertRole(event, ['admin'])
@@ -21,7 +22,8 @@ export default defineEventHandler(async (event) => {
     bookingCountResult,
     inquiriesResult,
     documentsResult,
-    bookingsResult
+    bookingsResult,
+    recentAccessLogs
   ] = await Promise.all([
     supabase.from('inquiries').select('*', { count: 'exact', head: true }),
     supabase.from('medical_cases').select('*', { count: 'exact', head: true }),
@@ -45,7 +47,10 @@ export default defineEventHandler(async (event) => {
       .select('id, booking_type, provider_name, start_date, end_date, status, medical_cases(case_code)')
       .gte('start_date', today)
       .order('start_date', { ascending: true })
-      .limit(6)
+      .limit(6),
+    searchAccessLogs({
+      limit: 8
+    })
   ])
 
   const errors = [
@@ -90,6 +95,7 @@ export default defineEventHandler(async (event) => {
     ],
     recent_inquiries: inquiriesResult.data || [],
     document_queue: documentsResult.data || [],
-    upcoming_bookings: bookingsResult.data || []
+    upcoming_bookings: bookingsResult.data || [],
+    recent_access_logs: recentAccessLogs || []
   }
 })

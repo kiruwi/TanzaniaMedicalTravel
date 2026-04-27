@@ -14,7 +14,8 @@ import BookingTable from '~/components/admin/BookingTable.vue'
 
 definePageMeta({
   layout: 'admin',
-  middleware: ['admin']
+  middleware: ['admin'],
+  path: '/tmt-admin/bookings'
 })
 
 const { request } = useAdminApi()

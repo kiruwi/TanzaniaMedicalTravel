@@ -117,20 +117,20 @@ export default defineNuxtConfig({
     '/patient/**': {
       robots: false
     },
-    '/admin/**': {
+    '/tmt-admin/**': {
       robots: false
     },
-    '/auth/**': {
+    '/tmt-admin': {
       robots: false
     }
   },
   sitemap: {
     siteUrl,
     autoLastmod: true,
-    exclude: ['/patient/**', '/admin/**', '/auth/**']
+    exclude: ['/patient/**', '/tmt-admin', '/tmt-admin/**']
   },
   robots: {
     sitemap: `${siteUrl}/sitemap.xml`,
-    disallow: ['/patient', '/patient/**', '/admin', '/admin/**', '/auth', '/auth/**']
+    disallow: ['/patient', '/patient/**', '/tmt-admin', '/tmt-admin/**']
   }
 })
