@@ -3,7 +3,11 @@
     <div class="container site-header__inner">
       <NuxtLink class="site-header__brand" to="/">
         <img class="site-header__brand-mark" src="/images/logo-mark.svg" alt="" aria-hidden="true">
-        <span class="site-header__brand-text">TMT</span>
+        <span class="site-header__brand-wordmark" aria-label="Tanzania Medical Travel">
+          <span>Tanzania</span>
+          <span class="site-header__brand-wordmark-emphasis">Medical</span>
+          <span class="site-header__brand-wordmark-subline">Travel</span>
+        </span>
       </NuxtLink>
 
       <nav class="site-header__nav" aria-label="Primary navigation">
@@ -67,9 +71,9 @@ onBeforeUnmount(() => {
   position: sticky;
   top: 0;
   z-index: 20;
-  border-bottom: 1px solid rgba(214, 229, 225, 0.9);
+  border-bottom: 1px solid var(--color-header-border);
   backdrop-filter: blur(14px);
-  background: rgba(247, 251, 250, 0.92);
+  background: var(--color-surface-elevated-soft);
   transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
 }
 
@@ -81,7 +85,7 @@ onBeforeUnmount(() => {
 }
 
 .site-header--scrolled {
-  box-shadow: 0 12px 30px rgba(6, 60, 55, 0.08);
+  box-shadow: var(--shadow-header);
 }
 
 .site-header__inner {
@@ -97,7 +101,7 @@ onBeforeUnmount(() => {
   align-items: center;
   gap: 0.7rem;
   color: var(--color-heading);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
@@ -107,12 +111,28 @@ onBeforeUnmount(() => {
   flex: 0 0 auto;
 }
 
-.site-header__brand-text {
-  font-weight: 700;
+.site-header__brand-wordmark {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  align-items: baseline;
+  column-gap: 0.28rem;
+  row-gap: 0.08rem;
+  flex: 0 1 auto;
+  font-size: 0.736rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.site-header__brand-wordmark-emphasis {
+  font-weight: 600;
+}
+
+.site-header__brand-wordmark-subline {
+  grid-column: 1 / -1;
 }
 
 .site-header--overlay .site-header__brand {
-  color: #f4fffb;
+  color: var(--color-text-on-dark);
 }
 
 .site-header__nav {
@@ -126,7 +146,7 @@ onBeforeUnmount(() => {
 }
 
 .site-header--overlay .site-header__nav {
-  color: #f4fffb;
+  color: var(--color-text-on-dark);
 }
 
 .site-header__nav a {
@@ -135,7 +155,7 @@ onBeforeUnmount(() => {
 
 .site-header__nav a:hover,
 .site-header__nav a:focus-visible {
-  color: #facc15;
+  color: var(--color-highlight);
   font-weight: 300;
 }
 
@@ -151,13 +171,13 @@ onBeforeUnmount(() => {
 }
 
 .site-header--overlay .site-header__actions :deep(.button) {
-  background: rgba(244, 255, 251, 0.14);
-  border-color: rgba(244, 255, 251, 0.18);
-  color: #f4fffb;
+  background: var(--color-surface-overlay-strong);
+  border-color: var(--color-border-on-dark-strong);
+  color: var(--color-text-on-dark);
 }
 
 .site-header--overlay .site-header__actions :deep(.button:hover) {
-  background: rgba(244, 255, 251, 0.22);
+  background: var(--color-surface-overlay-hover);
 }
 
 .site-header__menu-button {
@@ -171,8 +191,8 @@ onBeforeUnmount(() => {
 }
 
 .site-header--overlay .site-header__menu-button {
-  border-color: rgba(244, 255, 251, 0.38);
-  color: #f4fffb;
+  border-color: var(--color-border-on-dark-hover);
+  color: var(--color-text-on-dark);
 }
 
 @media (max-width: 1040px) {

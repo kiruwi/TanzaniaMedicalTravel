@@ -82,7 +82,7 @@ function proceduresLabel(specialty = '', name = '') {
 
 <style scoped>
 .home-treatments {
-  background: #ffffff;
+  background: var(--color-surface);
 }
 
 .section-heading {
@@ -109,8 +109,8 @@ function proceduresLabel(specialty = '', name = '') {
   padding: 1.75rem;
   overflow: hidden;
   border: none;
-  color: #f8fffd;
-  box-shadow: 0 22px 52px rgba(10, 27, 29, 0.14);
+  color: var(--color-text-on-dark);
+  box-shadow: var(--shadow-feature-card);
   isolation: isolate;
   transition: transform 0.24s ease, box-shadow 0.24s ease;
 }
@@ -134,13 +134,13 @@ function proceduresLabel(specialty = '', name = '') {
   bottom: 0;
   top: 25%;
   z-index: -1;
-  background: linear-gradient(180deg, rgba(15, 118, 110, 0) 0%, rgba(10, 91, 85, 0.5) 40%, rgba(6, 60, 55, 0.88) 100%);
+  background: var(--gradient-treatment-card);
 }
 
 .cards__item:hover,
 .cards__item:focus-visible {
   transform: translateY(-4px);
-  box-shadow: 0 28px 60px rgba(10, 27, 29, 0.18);
+  box-shadow: var(--shadow-feature-card-hover);
 }
 
 .cards__item:hover::before,
@@ -170,7 +170,7 @@ function proceduresLabel(specialty = '', name = '') {
 
 .cards__label {
   margin-bottom: 0;
-  color: rgba(238, 251, 247, 0.88);
+  color: var(--color-text-on-dark-faint);
   font-size: 0.8rem;
   font-weight: 400;
   letter-spacing: 0.12em;
@@ -179,7 +179,7 @@ function proceduresLabel(specialty = '', name = '') {
 
 .cards__item h3 {
   margin-bottom: 0;
-  color: #ffffff;
+  color: var(--color-text-inverse);
   font-size: clamp(1.55rem, 2.3vw, 2.15rem);
 }
 
@@ -188,7 +188,7 @@ function proceduresLabel(specialty = '', name = '') {
   align-items: center;
   gap: 0.45rem;
   margin-top: 1.35rem;
-  color: #facc15;
+  color: var(--color-highlight);
   font-weight: 400;
   opacity: 0;
   transform: translateY(10px);
@@ -197,7 +197,7 @@ function proceduresLabel(specialty = '', name = '') {
 
 .cards__item:hover .cards__link,
 .cards__item:focus-visible .cards__link {
-  color: #facc15;
+  color: var(--color-highlight);
   font-weight: 300;
   opacity: 1;
   transform: translateY(0);
@@ -205,7 +205,7 @@ function proceduresLabel(specialty = '', name = '') {
 
 .cards__procedures {
   margin-bottom: 0;
-  color: rgba(230, 244, 240, 0.9);
+  color: var(--color-text-on-dark-body);
   font-size: 0.95rem;
   font-weight: 400;
   line-height: 1.55;

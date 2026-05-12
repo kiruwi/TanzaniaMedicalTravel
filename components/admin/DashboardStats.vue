@@ -28,7 +28,7 @@ defineProps({
   display: grid;
   gap: 0.5rem;
   padding: 1.25rem;
-  background: rgba(255, 255, 255, 0.96);
+  background: var(--color-surface-elevated);
 }
 
 .stat-card__label {

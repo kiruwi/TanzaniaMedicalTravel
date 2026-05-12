@@ -4,7 +4,11 @@
       <div class="site-footer__brand">
         <NuxtLink class="site-footer__brand-link" to="/">
           <img class="site-footer__brand-mark" src="/images/logo-mark.svg" alt="" aria-hidden="true">
-          <span class="site-footer__brand-text">TMT</span>
+          <span class="site-footer__brand-wordmark" aria-label="Tanzania Medical Travel">
+            <span>Tanzania</span>
+            <span class="site-footer__brand-wordmark-emphasis">Medical</span>
+            <span class="site-footer__brand-wordmark-subline">Travel</span>
+          </span>
         </NuxtLink>
         <p>
           Trusted hospitals, caring guidance, and smoother medical travel from your first enquiry to safe arrival.
@@ -47,12 +51,12 @@ const supportEmail = 'info@traveltotanzania.com'
 
 <style scoped>
 .site-footer {
-  --color-heading: #b9d3cf;
-  --color-paragraph: #b9d3cf;
+  --color-heading: var(--color-text-on-dark-muted-alt);
+  --color-paragraph: var(--color-text-on-dark-muted-alt);
   margin-top: 4rem;
   padding: 3rem 0;
-  background: #0c2629;
-  color: #d7ebe8;
+  background: var(--color-footer-bg);
+  color: var(--color-text-on-dark-soft);
 }
 
 .site-footer__grid {
@@ -73,9 +77,9 @@ const supportEmail = 'info@traveltotanzania.com'
   align-items: center;
   gap: 0.9rem;
   width: fit-content;
-  color: #f4fbf9;
-  font-size: 1.15rem;
-  letter-spacing: 0.08em;
+  color: var(--color-text-on-dark-strong);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
@@ -85,8 +89,24 @@ const supportEmail = 'info@traveltotanzania.com'
   flex: 0 0 auto;
 }
 
-.site-footer__brand-text {
-  font-weight: 700;
+.site-footer__brand-wordmark {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  align-items: baseline;
+  column-gap: 0.32rem;
+  row-gap: 0.08rem;
+  flex: 0 1 auto;
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.site-footer__brand-wordmark-emphasis {
+  font-weight: 600;
+}
+
+.site-footer__brand-wordmark-subline {
+  grid-column: 1 / -1;
 }
 
 .site-footer__group {
@@ -110,13 +130,13 @@ const supportEmail = 'info@traveltotanzania.com'
 
 .site-footer__brand p {
   max-width: 30ch;
-  color: #b9d3cf;
+  color: var(--color-text-on-dark-muted-alt);
   margin-bottom: 0;
 }
 
 .site-footer li,
 .site-footer a {
-  color: #f4fbf9;
+  color: var(--color-text-on-dark-strong);
   font-weight: inherit;
 }
 

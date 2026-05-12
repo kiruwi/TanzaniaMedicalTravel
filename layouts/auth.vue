@@ -26,7 +26,7 @@
   display: flex;
   align-items: center;
   padding: 2rem 0;
-  background: #eef5f3;
+  background: var(--color-surface-muted);
 }
 
 .auth-layout__wrap {

@@ -302,7 +302,7 @@ onMounted(loadQuotes)
   gap: 1.5rem;
   grid-template-columns: minmax(0, 1.7fr) minmax(16rem, 0.9fr);
   padding: 1.6rem;
-  background: rgba(255, 255, 255, 0.96);
+  background: var(--color-surface-elevated);
 }
 
 .quotes-page__hero h1 {
@@ -326,9 +326,9 @@ onMounted(loadQuotes)
   display: grid;
   gap: 0.35rem;
   padding: 1rem;
-  border: 1px solid rgba(15, 118, 110, 0.12);
+  border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.72);
+  background: var(--color-surface-elevated-subtle);
 }
 
 .quotes-page__hero-metrics strong {
@@ -350,9 +350,9 @@ onMounted(loadQuotes)
 .quotes-page__error {
   margin-bottom: 0;
   padding: 1rem 1.2rem;
-  border: 1px solid rgba(180, 35, 24, 0.15);
+  border: 1px solid var(--color-danger-border);
   border-radius: var(--radius-sm);
-  background: rgba(180, 35, 24, 0.06);
+  background: var(--color-danger-bg);
   color: var(--color-danger);
 }
 
@@ -362,13 +362,13 @@ onMounted(loadQuotes)
 }
 
 .quotes-list {
-  background: rgba(255, 255, 255, 0.96);
+  background: var(--color-surface-elevated);
 }
 
 .quote-detail {
   display: grid;
   gap: 1rem;
-  background: rgba(255, 255, 255, 0.96);
+  background: var(--color-surface-elevated);
 }
 
 .quotes-list__header,
@@ -407,15 +407,15 @@ onMounted(loadQuotes)
   padding: 1rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.82);
+  background: var(--color-surface-elevated-muted);
   text-align: left;
   transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .quotes-list__item:hover,
 .quotes-list__item--active {
-  border-color: rgba(15, 118, 110, 0.35);
-  box-shadow: 0 12px 28px rgba(15, 40, 44, 0.08);
+  border-color: var(--color-border-interactive);
+  box-shadow: var(--shadow-card-hover);
   transform: translateY(-1px);
 }
 
@@ -455,7 +455,7 @@ onMounted(loadQuotes)
   grid-template-columns: minmax(0, 1.3fr) minmax(12rem, auto);
   align-items: start;
   padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(15, 118, 110, 0.12);
+  border-bottom: 1px solid var(--color-border-strong);
 }
 
 .quote-detail__identity {
@@ -491,7 +491,7 @@ onMounted(loadQuotes)
   gap: 1rem;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   padding: 1.2rem;
-  border: 1px solid rgba(15, 118, 110, 0.12);
+  border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-sm);
   background: var(--color-surface-muted);
 }
@@ -526,8 +526,8 @@ onMounted(loadQuotes)
   gap: 0.2rem;
   padding: 0.85rem 0.95rem;
   border-radius: 0.9rem;
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(15, 118, 110, 0.1);
+  background: var(--color-surface-elevated-muted);
+  border: 1px solid var(--color-border-subtle);
 }
 
 .quote-detail__cost-strip dt {
@@ -552,7 +552,7 @@ onMounted(loadQuotes)
   padding: 1.2rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--color-surface-elevated-soft);
 }
 
 .quote-detail__meta {
@@ -608,7 +608,7 @@ onMounted(loadQuotes)
 }
 
 tbody tr:nth-child(odd) {
-  background: rgba(238, 245, 243, 0.35);
+  background: var(--color-status-row);
 }
 
 @media (max-width: 1100px) {

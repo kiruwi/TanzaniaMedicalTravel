@@ -64,7 +64,7 @@ defineProps({
 <style scoped>
 .admin-table {
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.96);
+  background: var(--color-surface-elevated);
 }
 
 .admin-table__header {

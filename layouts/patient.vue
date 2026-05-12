@@ -49,10 +49,10 @@ const pageTitle = computed(() => {
 }
 
 .portal-layout__sidebar {
-  --color-paragraph: #d7ebe8;
+  --color-paragraph: var(--color-text-on-dark-soft);
   padding: 2rem 1.5rem;
-  background: #103538;
-  color: #e8f4f1;
+  background: var(--color-sidebar-bg);
+  color: var(--color-text-on-dark-muted);
 }
 
 .portal-layout__brand {
@@ -71,12 +71,12 @@ const pageTitle = computed(() => {
 .portal-layout__link {
   padding: 0.8rem 1rem;
   border-radius: 0.85rem;
-  color: #d7ebe8;
+  color: var(--color-text-on-dark-soft);
 }
 
 .portal-layout__link.router-link-active {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  background: var(--color-surface-overlay);
+  color: var(--color-text-inverse);
 }
 
 .portal-layout__main {

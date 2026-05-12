@@ -27,9 +27,9 @@ defineProps({
 
 <style scoped>
 .home-testimonials {
-  --color-heading: #f4fbf9;
-  --color-paragraph: #d6e7e3;
-  background: #12393d;
+  --color-heading: var(--color-text-on-dark-strong);
+  --color-paragraph: var(--color-text-on-dark-faint);
+  background: var(--color-testimonials-bg);
 }
 
 .testimonials-layout {
@@ -57,8 +57,8 @@ defineProps({
 
 .testimonials__item {
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(215, 235, 232, 0.12);
+  background: var(--color-surface-overlay-soft);
+  border-color: var(--color-border-on-dark-subtle);
   box-shadow: none;
 }
 
@@ -69,13 +69,13 @@ defineProps({
 }
 
 .testimonials__item strong {
-  color: #f4fbf9;
+  color: var(--color-text-on-dark-strong);
 }
 
 .testimonials__item span {
   display: block;
   margin-top: 0.25rem;
-  color: #b9d3cf;
+  color: var(--color-text-on-dark-muted-alt);
 }
 
 @media (max-width: 900px) {

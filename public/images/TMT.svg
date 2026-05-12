@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.81 28.99">
+  <defs>
+    <style>
+      @font-face {
+        font-family: "Alexandria";
+        src: url("/fonts/Alexandria-Regular.ttf") format("truetype");
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Alexandria";
+        src: url("/fonts/Alexandria-SemiBold.ttf") format("truetype");
+        font-weight: 600;
+        font-style: normal;
+      }
+
+      .cls-1 {
+        letter-spacing: 0em;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        font-family: "Alexandria";
+        font-weight: 600;
+      }
+
+      .cls-4 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-5, .cls-3 {
+        letter-spacing: 0em;
+      }
+
+      .cls-6, .cls-7 {
+        font-family: "Alexandria";
+        font-weight: 400;
+      }
+
+      .cls-8 {
+        font-size: 12px;
+      }
+
+      .cls-7 {
+        letter-spacing: -.07em;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <text class="cls-8" transform="translate(0 10.2)"><tspan class="cls-7" x="0" y="0">T</tspan><tspan class="cls-6" x="6.12" y="0">ANZANIA </tspan><tspan class="cls-3" x="66.55" y="0">MEDI</tspan><tspan class="cls-1" x="98.83" y="0">C</tspan><tspan class="cls-2" x="107.07" y="0">AL</tspan><tspan class="cls-6"><tspan x="0" y="12">TR</tspan><tspan class="cls-4" x="15.62" y="12">A</tspan><tspan class="cls-5" x="23.89" y="12">VEL</tspan></tspan></text>
+  </g>
+</svg>

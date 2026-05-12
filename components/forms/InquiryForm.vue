@@ -113,7 +113,7 @@ async function submit() {
   padding: 0.9rem 1rem;
   border: 1px solid var(--color-border);
   border-radius: 0.85rem;
-  background: #fff;
+  background: var(--color-surface);
 }
 
 .form-group select {

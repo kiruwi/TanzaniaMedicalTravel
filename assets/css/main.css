@@ -42,17 +42,102 @@
   --color-bg: #f5f8f7;
   --color-surface: #ffffff;
   --color-surface-muted: #eef5f3;
-  --color-text: #063c37;
+  --color-surface-subtle: #f0f1ee;
+  --color-text: #2f404f;
   --color-text-soft: #4f6673;
   --color-paragraph: #4f6673;
-  --color-heading: #063c37;
+  --color-heading: #2f404f;
   --color-primary: #0f766e;
-  --color-primary-strong: #0a5b55;
+  --color-primary-strong: #2f404f;
   --color-accent: #d97706;
+  --color-accent-strong: #b45309;
   --color-border: #d6e5e1;
   --color-danger: #b42318;
   --color-success: #067647;
-  --shadow-card: 0 18px 48px rgba(15, 40, 44, 0.08);
+  --color-support: #2f404f;
+  --color-trust: #2f404f;
+  --color-highlight: #facc15;
+  --color-button: #3894a1;
+  --color-button-hover: #3894a1;
+  --color-admin-brand: #fbd38d;
+  --color-footer-bg: #2f404f;
+  --color-sidebar-bg: #2f404f;
+  --color-testimonials-bg: #2f404f;
+  --color-text-inverse: #ffffff;
+  --color-text-on-dark: #ffffff;
+  --color-text-on-dark-strong: #ffffff;
+  --color-text-on-dark-muted: #ffffff;
+  --color-text-on-dark-soft: #ffffff;
+  --color-text-on-dark-subtle: #ffffff;
+  --color-text-on-dark-faint: #ffffff;
+  --color-text-on-dark-softer: #ffffff;
+  --color-text-on-dark-accent: #ffffff;
+  --color-text-on-dark-body: #ffffff;
+  --color-text-on-dark-muted-alt: #ffffff;
+  --color-surface-elevated: rgba(255, 255, 255, 0.96);
+  --color-surface-elevated-soft: rgba(255, 255, 255, 0.92);
+  --color-surface-elevated-muted: rgba(255, 255, 255, 0.82);
+  --color-surface-elevated-subtle: rgba(255, 255, 255, 0.72);
+  --color-surface-elevated-tint: rgba(255, 255, 255, 0.7);
+  --color-surface-panel: rgba(255, 255, 255, 0.68);
+  --color-surface-overlay-soft: rgba(255, 255, 255, 0.06);
+  --color-surface-overlay: rgba(255, 255, 255, 0.08);
+  --color-surface-overlay-strong: rgba(255, 255, 255, 0.14);
+  --color-surface-overlay-hover: rgba(255, 255, 255, 0.22);
+  --color-surface-frost: rgba(247, 251, 250, 0.14);
+  --color-scrim: rgba(47, 64, 79, 0.5);
+  --color-border-subtle: rgba(15, 118, 110, 0.1);
+  --color-border-strong: rgba(15, 118, 110, 0.12);
+  --color-border-interactive: rgba(15, 118, 110, 0.35);
+  --color-border-focus: rgba(15, 118, 110, 0.45);
+  --color-border-on-dark: rgba(255, 255, 255, 0.08);
+  --color-border-on-dark-strong: rgba(244, 255, 251, 0.18);
+  --color-border-on-dark-hover: rgba(244, 255, 251, 0.38);
+  --color-border-on-dark-soft: rgba(214, 229, 225, 0.24);
+  --color-border-on-dark-subtle: rgba(215, 235, 232, 0.12);
+  --color-primary-tint: rgba(15, 118, 110, 0.12);
+  --color-primary-tint-soft: rgba(15, 118, 110, 0.1);
+  --color-primary-tint-strong: rgba(15, 118, 110, 0.08);
+  --color-danger-border: rgba(180, 35, 24, 0.15);
+  --color-danger-bg: rgba(180, 35, 24, 0.06);
+  --color-success-border: rgba(6, 118, 71, 0.14);
+  --color-success-bg: rgba(6, 118, 71, 0.07);
+  --color-shadow-hero-copy: rgba(47, 64, 79, 0.26);
+  --color-shadow-hero-title: rgba(47, 64, 79, 0.34);
+  --shadow-card-hover: 0 12px 28px rgba(47, 64, 79, 0.08);
+  --shadow-header: 0 12px 30px rgba(47, 64, 79, 0.08);
+  --shadow-feature-card: 0 22px 52px rgba(47, 64, 79, 0.14);
+  --shadow-feature-card-hover: 0 28px 60px rgba(47, 64, 79, 0.18);
+  --shadow-inset-soft: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  --shadow-card: 0 18px 48px rgba(47, 64, 79, 0.08);
+  --gradient-admin-shell:
+    radial-gradient(circle at top left, rgba(217, 119, 6, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(245, 248, 247, 1), rgba(238, 245, 243, 0.88));
+  --gradient-admin-sidebar:
+    linear-gradient(180deg, rgba(47, 64, 79, 0.98), rgba(47, 64, 79, 0.94)),
+    var(--color-heading);
+  --gradient-form-surface:
+    radial-gradient(circle at top right, rgba(217, 119, 6, 0.1), transparent 24%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(238, 245, 243, 0.94));
+  --gradient-quote-intro:
+    radial-gradient(circle at top right, rgba(217, 119, 6, 0.08), transparent 26%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(238, 245, 243, 0.92));
+  --gradient-hero-overlay:
+    linear-gradient(120deg, rgba(47, 64, 79, 0.78) 0%, rgba(47, 64, 79, 0.56) 42%, rgba(47, 64, 79, 0.26) 100%);
+  --gradient-treatment-card:
+    linear-gradient(180deg, rgba(47, 64, 79, 0) 0%, rgba(47, 64, 79, 0.5) 40%, rgba(47, 64, 79, 0.88) 100%);
+  --gradient-icon-support:
+    linear-gradient(145deg, rgba(47, 64, 79, 0.16), rgba(47, 64, 79, 0.08));
+  --gradient-icon-pricing:
+    linear-gradient(145deg, rgba(217, 119, 6, 0.18), rgba(180, 83, 9, 0.08));
+  --gradient-icon-trust:
+    linear-gradient(145deg, rgba(47, 64, 79, 0.18), rgba(47, 64, 79, 0.08));
+  --color-border-support: rgba(47, 64, 79, 0.18);
+  --color-border-pricing: rgba(217, 119, 6, 0.2);
+  --color-border-trust: rgba(47, 64, 79, 0.18);
+  --color-header-border: rgba(214, 229, 225, 0.9);
+  --color-status-row: rgba(238, 245, 243, 0.35);
+  --color-focus-ring: rgba(15, 118, 110, 0.08);
   --radius-sm: 0.75rem;
   --radius-md: 1rem;
   --radius-lg: 1.5rem;
@@ -207,15 +292,15 @@ ul {
   padding: 0.9rem 1.4rem;
   border: 1px solid transparent;
   border-radius: 999px;
-  background: var(--color-primary);
-  color: #fff;
+  background: var(--color-button);
+  color: var(--color-text-inverse);
   font-size: 0.9rem;
   font-weight: 300;
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .button:hover {
-  background: var(--color-primary-strong);
+  background: var(--color-button-hover);
   transform: translateY(-1px);
 }
 
@@ -287,7 +372,7 @@ ul {
   gap: 0.4rem;
   padding: 0.35rem 0.8rem;
   border-radius: 999px;
-  background: rgba(15, 118, 110, 0.1);
+  background: var(--color-primary-tint-soft);
   color: var(--color-primary);
   font-size: 0.85rem;
   font-weight: 400;

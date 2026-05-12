@@ -104,9 +104,9 @@ onMounted(loadAccessLog)
 .access-log-page__error {
   margin-bottom: 0;
   padding: 1rem 1.2rem;
-  border: 1px solid rgba(180, 35, 24, 0.15);
+  border: 1px solid var(--color-danger-border);
   border-radius: var(--radius-sm);
-  background: rgba(180, 35, 24, 0.06);
+  background: var(--color-danger-bg);
   color: var(--color-danger);
 }
 

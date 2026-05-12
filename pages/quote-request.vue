@@ -45,11 +45,9 @@ useHead({
 
 .quote-request-page__intro {
   padding: 1.6rem;
-  border: 1px solid rgba(15, 118, 110, 0.1);
+  border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-md);
-  background:
-    radial-gradient(circle at top right, rgba(217, 119, 6, 0.08), transparent 26%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(238, 245, 243, 0.92));
+  background: var(--gradient-quote-intro);
 }
 
 .quote-request-page__intro .eyebrow {
@@ -69,9 +67,9 @@ useHead({
 
 .quote-request-page__highlights li {
   padding: 0.9rem 1rem;
-  border: 1px solid rgba(15, 118, 110, 0.12);
+  border: 1px solid var(--color-border-strong);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--color-surface-elevated-tint);
   color: var(--color-heading);
   text-align: center;
 }

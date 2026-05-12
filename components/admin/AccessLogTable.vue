@@ -125,7 +125,7 @@ function formatOrigin(item) {
 .access-log th,
 .access-log td {
   padding: 0.85rem 1.25rem;
-  border-top: 1px solid rgba(15, 118, 110, 0.1);
+  border-top: 1px solid var(--color-border-subtle);
   text-align: left;
   vertical-align: top;
 }

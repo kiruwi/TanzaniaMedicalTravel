@@ -47,7 +47,7 @@ defineProps({
 <style scoped>
 .review-panel {
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.96);
+  background: var(--color-surface-elevated);
 }
 
 .review-panel__header {

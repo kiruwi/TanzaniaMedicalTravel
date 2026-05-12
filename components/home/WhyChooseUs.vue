@@ -55,7 +55,7 @@ const reasons = [
 
 <style scoped>
 .home-why {
-  background: #e7f0ed;
+  background: var(--color-surface-subtle);
 }
 
 .section-heading {
@@ -78,7 +78,7 @@ const reasons = [
   display: grid;
   gap: 0.9rem;
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--color-surface-elevated-tint);
 }
 
 .why__icon {
@@ -88,25 +88,25 @@ const reasons = [
   width: 3.2rem;
   height: 3.2rem;
   border-radius: 1rem;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  box-shadow: var(--shadow-inset-soft);
 }
 
 .why__icon--support {
-  background: linear-gradient(145deg, rgba(15, 118, 110, 0.16), rgba(6, 60, 55, 0.08));
-  color: #0b6b64;
-  border: 1px solid rgba(15, 118, 110, 0.18);
+  background: var(--gradient-icon-support);
+  color: var(--color-support);
+  border: 1px solid var(--color-border-support);
 }
 
 .why__icon--pricing {
-  background: linear-gradient(145deg, rgba(217, 119, 6, 0.18), rgba(180, 83, 9, 0.08));
-  color: #b45309;
-  border: 1px solid rgba(217, 119, 6, 0.2);
+  background: var(--gradient-icon-pricing);
+  color: var(--color-accent-strong);
+  border: 1px solid var(--color-border-pricing);
 }
 
 .why__icon--trust {
-  background: linear-gradient(145deg, rgba(22, 101, 52, 0.18), rgba(21, 94, 117, 0.08));
-  color: #166534;
-  border: 1px solid rgba(22, 101, 52, 0.18);
+  background: var(--gradient-icon-trust);
+  color: var(--color-trust);
+  border: 1px solid var(--color-border-trust);
 }
 
 .why__icon svg {

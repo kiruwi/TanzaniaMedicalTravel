@@ -94,9 +94,7 @@ async function submit() {
   display: grid;
   gap: 1.25rem;
   padding: clamp(1.4rem, 3vw, 2rem);
-  background:
-    radial-gradient(circle at top right, rgba(217, 119, 6, 0.1), transparent 24%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(238, 245, 243, 0.94));
+  background: var(--gradient-form-surface);
 }
 
 .form__intro {
@@ -133,7 +131,7 @@ async function submit() {
   padding: 0.9rem 1rem;
   border: 1px solid var(--color-border);
   border-radius: 0.85rem;
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--color-surface-elevated-soft);
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
@@ -141,8 +139,8 @@ async function submit() {
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: rgba(15, 118, 110, 0.45);
-  box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.08);
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 4px var(--color-focus-ring);
   transform: translateY(-1px);
 }
 
@@ -183,7 +181,7 @@ async function submit() {
   margin-bottom: 0;
   padding: 0.95rem 1rem;
   border-radius: var(--radius-sm);
-  background: rgba(15, 118, 110, 0.08);
+  background: var(--color-primary-tint-strong);
 }
 
 @media (max-width: 900px) {

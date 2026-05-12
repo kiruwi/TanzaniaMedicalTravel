@@ -82,7 +82,7 @@ useHead({
   width: 1.35rem;
   height: 1.35rem;
   border-radius: 999px;
-  background: rgba(15, 118, 110, 0.12);
+  background: var(--color-primary-tint);
   color: var(--color-primary);
   font-size: 0.85rem;
   line-height: 1;

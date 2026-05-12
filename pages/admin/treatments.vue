@@ -267,7 +267,7 @@ onMounted(loadPage)
   padding: 1rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--color-surface-elevated-soft);
   text-align: left;
 }
 
@@ -278,8 +278,8 @@ onMounted(loadPage)
 }
 
 .cms-list__item--active {
-  border-color: rgba(15, 118, 110, 0.35);
-  box-shadow: 0 12px 28px rgba(15, 40, 44, 0.08);
+  border-color: var(--color-border-interactive);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .cms-editor {
@@ -304,7 +304,7 @@ onMounted(loadPage)
   padding: 0.9rem 1rem;
   border: 1px solid var(--color-border);
   border-radius: 0.85rem;
-  background: #fff;
+  background: var(--color-surface);
 }
 
 .cms-form__field--checkbox {
@@ -331,14 +331,14 @@ onMounted(loadPage)
 }
 
 .cms-page__error {
-  border: 1px solid rgba(180, 35, 24, 0.15);
-  background: rgba(180, 35, 24, 0.06);
+  border: 1px solid var(--color-danger-border);
+  background: var(--color-danger-bg);
   color: var(--color-danger);
 }
 
 .cms-page__success {
-  border: 1px solid rgba(6, 118, 71, 0.14);
-  background: rgba(6, 118, 71, 0.07);
+  border: 1px solid var(--color-success-border);
+  background: var(--color-success-bg);
   color: var(--color-success);
 }
 

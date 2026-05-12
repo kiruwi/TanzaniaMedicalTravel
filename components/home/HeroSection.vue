@@ -38,9 +38,9 @@
   padding-top: calc(84px + 5.5rem);
   padding-bottom: 5.5rem;
   background:
-    linear-gradient(120deg, rgba(4, 27, 25, 0.78) 0%, rgba(7, 49, 45, 0.56) 42%, rgba(12, 74, 68, 0.26) 100%),
+    var(--gradient-hero-overlay),
     url('/images/hero-image.webp') center center / cover no-repeat;
-  color: #f4fffb;
+  color: var(--color-text-on-dark);
 }
 
 .hero__grid {
@@ -59,19 +59,19 @@
 
 .hero__copy .eyebrow {
   display: inline-block;
-  color: #cfeee4;
+  color: var(--color-text-on-dark-softer);
 }
 
 .hero__copy :deep(h1) {
-  color: #f4fffb;
-  text-shadow: 0 12px 36px rgba(4, 27, 25, 0.34);
+  color: var(--color-text-on-dark);
+  text-shadow: 0 12px 36px var(--color-shadow-hero-title);
 }
 
 .hero__copy p {
   max-width: 42rem;
-  color: #d6f0e8;
+  color: var(--color-text-on-dark-subtle);
   font-size: 1rem;
-  text-shadow: 0 10px 24px rgba(4, 27, 25, 0.26);
+  text-shadow: 0 10px 24px var(--color-shadow-hero-copy);
 }
 
 .hero__actions {
@@ -82,40 +82,40 @@
 }
 
 .hero__actions :deep(.button--ghost) {
-  border-color: rgba(244, 255, 251, 0.4);
-  color: #f4fffb;
-  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--color-border-on-dark-hover);
+  color: var(--color-text-on-dark);
+  background: var(--color-surface-overlay-soft);
 }
 
 .hero__actions :deep(.button--ghost:hover) {
-  background: rgba(255, 255, 255, 0.14);
+  background: var(--color-surface-overlay-strong);
 }
 
 .hero__panel {
   display: grid;
   gap: 1rem;
   padding: 1.5rem;
-  background: rgba(247, 251, 250, 0.14);
-  border-color: rgba(214, 229, 225, 0.24);
+  background: var(--color-surface-frost);
+  border-color: var(--color-border-on-dark-soft);
   backdrop-filter: blur(18px);
 }
 
 .hero__metric {
   padding: 1.25rem;
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--color-surface-overlay);
 }
 
 .hero__metric strong {
   display: block;
   margin-bottom: 0.35rem;
-  color: #d8fff4;
+  color: var(--color-text-on-dark-accent);
   font-size: 1.8rem;
 }
 
 .hero__metric span {
   display: block;
-  color: #e2f7f0;
+  color: var(--color-text-on-dark-body);
   font-weight: var(--font-weight-copy);
 }
 

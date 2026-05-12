@@ -75,24 +75,20 @@ watch(
   min-height: 100vh;
   display: grid;
   grid-template-columns: 280px 1fr;
-  background:
-    radial-gradient(circle at top left, rgba(217, 119, 6, 0.08), transparent 24%),
-    linear-gradient(180deg, rgba(245, 248, 247, 1), rgba(238, 245, 243, 0.88));
+  background: var(--gradient-admin-shell);
 }
 
 .admin-layout__sidebar {
   padding: 2rem 1.5rem;
-  background:
-    linear-gradient(180deg, rgba(6, 60, 55, 0.98), rgba(15, 118, 110, 0.94)),
-    var(--color-heading);
-  color: rgba(255, 255, 255, 0.94);
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--gradient-admin-sidebar);
+  color: var(--color-text-on-dark);
+  border-right: 1px solid var(--color-border-on-dark);
 }
 
 .admin-layout__brand {
   display: inline-flex;
   margin-bottom: 2rem;
-  color: #fbd38d;
+  color: var(--color-admin-brand);
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -106,19 +102,19 @@ watch(
 .admin-layout__link {
   padding: 0.8rem 1rem;
   border-radius: 0.85rem;
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--color-text-on-dark-soft);
   transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .admin-layout__link:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  background: var(--color-surface-overlay);
+  color: var(--color-text-inverse);
   transform: translateX(2px);
 }
 
 .admin-layout__link.router-link-active {
-  background: rgba(255, 255, 255, 0.14);
-  color: #fff;
+  background: var(--color-surface-overlay-strong);
+  color: var(--color-text-inverse);
 }
 
 .admin-layout__main {
@@ -132,9 +128,9 @@ watch(
   gap: 1rem;
   margin-bottom: 2rem;
   padding: 1.25rem 1.5rem;
-  border: 1px solid rgba(15, 118, 110, 0.12);
+  border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.68);
+  background: var(--color-surface-panel);
   backdrop-filter: blur(14px);
 }
 

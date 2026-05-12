@@ -41,7 +41,7 @@ defineEmits(['close'])
   position: fixed;
   inset: 0;
   padding: 1rem;
-  background: rgba(12, 38, 41, 0.5);
+  background: var(--color-scrim);
 }
 
 .mobile-menu__panel {
@@ -49,7 +49,7 @@ defineEmits(['close'])
   margin-left: auto;
   padding: 1.25rem;
   border-radius: 1.25rem;
-  background: #fff;
+  background: var(--color-surface);
 }
 
 .mobile-menu__header {
